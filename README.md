@@ -6,3 +6,5 @@
 
 
 gradle
+
+需要留意 resources/fabric.mod.json 中的配置信息。

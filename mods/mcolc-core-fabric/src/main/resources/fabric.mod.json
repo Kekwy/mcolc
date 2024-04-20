@@ -1,22 +1,22 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "mcolc",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Minecraft Online Community Core Mod",
+	"description": "为你的Minecraft服务器一键部署定制化的在线社区平台。 ",
 	"authors": [
-		"Me!"
+		"Kekwy"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://blog.kekwy.com/mcolc",
+		"sources": "https://github.com/Kekwy/mcolc"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/modid/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"com.kekwy.mcolc.ExampleMod"
 		],
 		"client": [
 			"com.example.ExampleModClient"
@@ -31,7 +31,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.15.9",
-		"minecraft": "~1.20.4",
+		"minecraft": "1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
