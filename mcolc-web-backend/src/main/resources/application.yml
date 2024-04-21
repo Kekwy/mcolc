@@ -1,5 +1,8 @@
 spring.application.name: mcolc-web-backend
 
+server:
+  port: 8081
+
 spring:
   security:
     oauth2:
