@@ -10,6 +10,8 @@ import axios from 'axios'
 import {deleteRequest, getRequest, postRequest, putRequest} from "@/util/api";
 // import {initMenu} from "@/util/menus";
 
+require("@south-paw/typeface-minecraft");
+
 Vue.prototype.$axios = axios
 
 // 是否在浏览器控制台提示开发环境
