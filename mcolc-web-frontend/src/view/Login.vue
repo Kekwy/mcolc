@@ -2,14 +2,16 @@
   <!-- 设置随机背景图片 -->
   <div class="common-layout" id="building" :style="{ backgroundImage: 'url(\'' + this.backgroundImageUrl + '\')' }">
     <el-card class="welcome-card" shadow="always">
-      <div slot="header" class="card-header">Welcome to MCOLC!</div>
-      <div>
+      <div slot="header" class="card-header">
+        <p class="welcome-text">Welcome to MCOLC!</p>
+      </div>
+      <div class="icon-container">
         <el-tooltip content="使用微软账号登录" placement=bottom>
-          <font-awesome-icon :icon="['fas', 'square']" />
-          <i class="fab fa-github fa-lg inner-icon"></i>
+          <img decoding="async" class="icon" src="/icons/microsoft.svg" alt="">
         </el-tooltip>
-        <el-tooltip content="使用NMO皮肤站登录" placement=bottom>
-          <img class="icon" src="github_logo.png" alt="NMO_Skin">
+        <el-tooltip content="使用NMO皮肤站登录" placement=bottom @click="toNmoSkin">
+          <img decoding="async"
+               src="https://www.nmo.net.cn/wp-content/uploads/2023/12/nmo_logo-1024x470.png" alt="" class="icon1">
         </el-tooltip>
       </div>
     </el-card>
@@ -47,6 +49,9 @@ export default {
     }
   },
   methods: {
+    toNmoSkin() {
+      this.$router.replace('https://skin.nmo.net.cn/oauth/authorize');
+    },
     random(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
@@ -65,7 +70,7 @@ export default {
   background-clip: padding-box;
   /*margin: 180px auto;*/
   width: 450px;
-  height: 200px;
+  height: 150px;
   padding: 15px 35px 15px 35px;
   border: 1px solid #eaeaea;
   font-family: "Minecraft", serif;
@@ -77,6 +82,10 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.welcome-text {
+  margin-top: -17px;
+}
+
 login {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -84,10 +93,6 @@ login {
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
-}
-
-.centered-card {
-
 }
 
 body {
@@ -118,21 +123,31 @@ body {
 .card-header {
   font-size: 30px;
   font-weight: bold;
-  text-align: center;
+  height: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 
-/*.icon-container {*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 90px;
+}
 
-/*.icon {*/
-/*  width: 40px;*/
-/*  height: 40px;*/
-/*  margin: 0 10px;*/
-/*}*/
+.icon {
+  width: 36px;
+  object-fit: contain;
 
+  margin: 0 10px;
+}
+
+.icon1 {
+  width: 60px;
+  object-fit: contain;
+
+  margin: 0 10px;
+}
 
 </style>
