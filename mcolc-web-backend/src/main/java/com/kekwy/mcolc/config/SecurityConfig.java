@@ -1,33 +1,60 @@
 package com.kekwy.mcolc.config;
 
+import com.kekwy.mcolc.filter.Oauth2AuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+
+/*
+           _____                      _ __        ______            _____
+          / ___/___  _______  _______(_) /___  __/ ____/___  ____  / __(_)___ _
+          \__ \/ _ \/ ___/ / / / ___/ / __/ / / / /   / __ \/ __ \/ /_/ / __ `/
+         ___/ /  __/ /__/ /_/ / /  / / /_/ /_/ / /___/ /_/ / / / / __/ / /_/ /
+        /____/\___/\___/\__,_/_/  /_/\__/\__, /\____/\____/_/ /_/_/ /_/\__, /
+                                        /____/                        /____/
+ */
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, Oauth2AuthenticationTokenFilter filter)
+            throws Exception {
         return http
                 .authorizeHttpRequests(configurer -> {
                     configurer
-                            .requestMatchers("/hello").hasRole("USER")
-                            .anyRequest().permitAll();
-//                    configurer
+                            .requestMatchers(
+                                    "/hello",
+                                    "/auth/**",
+                                    "/css/**",
+                                    "/js/**",
+                                    "/index.html",
+                                    "favicon.ico",
+                                    "/doc.html",
+                                    "/webjars/**",
+                                    "/swagger-resources/**",
+                                    "/v3/api-docs/**"
+                            ).permitAll()
+                            // 除了上面，所有请求都要拦截
+                            .anyRequest().authenticated();
                 })
-                .formLogin(configurer -> {
-                    configurer.loginPage("/login");
-                })
-                .oauth2Login(configurer -> {
+//                .formLogin(configurer -> {
 //                    configurer.loginPage("/login");
-                })
-                .logout(configurer -> {
-                    configurer
-                            .logoutSuccessUrl("/");
-                })
+//                })
+//                .oauth2Login(configurer -> {
+////                    configurer.loginPage("/login");
+//                })
+//                .logout(configurer -> {
+//                    configurer
+//                            .logoutSuccessUrl("/");
+//                })
+                // 添加自定义认证过滤器
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
 }

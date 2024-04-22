@@ -7,8 +7,10 @@ import router from "../router";
 // 请求拦截器
 axios.interceptors.request.use(config => {
     // 如果存在 token，请求携带这个 token
-    if (window.sessionStorage.getItem('accessToken')) {
-        config.headers['Authorization'] = 'Bearer' + window.sessionStorage.getItem('accessToken');
+    if (window.localStorage.getItem('accessToken')
+        && window.localStorage.getItem('authService')) {
+        config.headers['Authorization'] = 'Bearer' + window.localStorage.getItem('accessToken');
+        config.headers['AuthorizationService'] = window.localStorage.getItem('authService');
     }
     return config;
 }, error => {

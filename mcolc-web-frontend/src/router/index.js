@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from "@/view/Login.vue";
 import LoginSuccess from "@/view/LoginSuccess.vue";
+import Home from "@/view/Home.vue";
 
 // 安装路由
 Vue.use(VueRouter)
@@ -19,6 +20,11 @@ const routes = [
         name: 'LoginSuccess',
         component: LoginSuccess,
     },
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+    }
 ]
 
 const router = new VueRouter({

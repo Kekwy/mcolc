@@ -2,11 +2,11 @@ package com.kekwy.mcolc.controller;
 
 
 import com.kekwy.mcolc.controller.api.AuthAPI;
+import com.kekwy.mcolc.model.vo.RedirectUrl;
 import com.kekwy.mcolc.service.AuthService;
 import com.kekwy.mcolc.util.ResponseBuilder;
-import com.kekwy.mcolc.vo.RedirectUrl;
-import com.kekwy.mcolc.vo.ResponseBody;
-import com.kekwy.mcolc.vo.Token;
+import com.kekwy.mcolc.model.vo.ResponseBody;
+import com.kekwy.mcolc.model.vo.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

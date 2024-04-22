@@ -9,9 +9,11 @@ export default {
   mounted() {
     let authName = this.$route.params.authName;
     this.$getRequest('/auth/' + authName + '/token?code=' + this.$route.query.code).then(response => {
-      if (response.token) {
-        window.localStorage.setItem('accessToken', response.token);
+      if (response.payload.token) {
+        window.localStorage.setItem('accessToken', response.payload.token);
+        window.localStorage.setItem('authService', authName);
       }
+      this.$router.replace('/');
     });
     // // 根据参数进行路由跳转
     // if (this.code === 'xxx') {

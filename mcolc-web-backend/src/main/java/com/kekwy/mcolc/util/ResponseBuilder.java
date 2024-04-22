@@ -1,6 +1,6 @@
 package com.kekwy.mcolc.util;
 
-import com.kekwy.mcolc.vo.ResponseBody;
+import com.kekwy.mcolc.model.vo.ResponseBody;
 
 public class ResponseBuilder {
 

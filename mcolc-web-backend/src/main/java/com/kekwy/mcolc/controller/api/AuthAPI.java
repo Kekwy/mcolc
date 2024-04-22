@@ -1,6 +1,6 @@
 package com.kekwy.mcolc.controller.api;
 
-import com.kekwy.mcolc.vo.ResponseBody;
+import com.kekwy.mcolc.model.vo.ResponseBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
