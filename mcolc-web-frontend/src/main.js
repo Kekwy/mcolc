@@ -19,7 +19,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.putRequest = putRequest;
-Vue.prototype.getRequest = getRequest;
+Vue.prototype.$getRequest = getRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 
 Vue.use(ElementUI);

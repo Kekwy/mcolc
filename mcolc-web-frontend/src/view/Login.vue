@@ -7,11 +7,13 @@
       </div>
       <div class="icon-container">
         <el-tooltip content="使用微软账号登录" placement=bottom>
-          <img decoding="async" class="icon" src="/icons/microsoft.svg" alt="">
+          <img decoding="async" class="icon" src="/icons/microsoft.svg" alt=""
+               @click="toMicrosoft">
         </el-tooltip>
-        <el-tooltip content="使用NMO皮肤站登录" placement=bottom @click="toNmoSkin">
+        <el-tooltip content="使用NMO皮肤站登录" placement=bottom>
           <img decoding="async"
-               src="https://www.nmo.net.cn/wp-content/uploads/2023/12/nmo_logo-1024x470.png" alt="" class="icon1">
+               src="https://www.nmo.net.cn/wp-content/uploads/2023/12/nmo_logo-1024x470.png" alt="" class="icon1"
+               @click="toNmoSkin">
         </el-tooltip>
       </div>
     </el-card>
@@ -28,6 +30,7 @@
 
 <script>
 import {Message} from "element-ui";
+import Vue from "vue";
 
 export default {
   name: "Login",
@@ -50,7 +53,17 @@ export default {
   },
   methods: {
     toNmoSkin() {
-      this.$router.replace('https://skin.nmo.net.cn/oauth/authorize');
+      this.$getRequest('/auth/nmo_skin').then(response => {
+        this.$message.success(response.toString());
+        if (response.code === 0) {
+          window.location.href = response.payload.redirect;
+        }
+      });
+    },
+    toMicrosoft() {
+      this.$getRequest('/auth/microsoft').then(response => {
+        window.location.href = response.redirect;
+      });
     },
     random(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;

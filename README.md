@@ -14,3 +14,5 @@ blessing skin 皮肤站的 oauth2 登录问题 https://blessing.netlify.app/api/
 https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html
 
 https://www.cnblogs.com/xiaogblog/p/16718191.html spring 打包时的配置文件问题
+
+作为Http响应体中的对象，其get方法必须有get前缀。
