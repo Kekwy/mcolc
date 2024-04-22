@@ -20,3 +20,5 @@ https://www.cnblogs.com/xiaogblog/p/16718191.html spring 打包时的配置文�
 后端 oauth2 认证流程待优化。
 
 https://blog.csdn.net/yiifaa/article/details/77939282 resttemplate 传输表单
+
+227ed512-1401-316b-824a-436671ad6fae
