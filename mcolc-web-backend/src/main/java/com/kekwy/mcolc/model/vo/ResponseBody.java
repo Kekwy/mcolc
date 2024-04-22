@@ -1,4 +1,4 @@
-package com.kekwy.mcolc.vo;
+package com.kekwy.mcolc.model.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
