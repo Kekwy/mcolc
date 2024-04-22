@@ -30,11 +30,13 @@
 
 <script>
 import {Message} from "element-ui";
-import Vue from "vue";
 
 export default {
   name: "Login",
   mounted() {
+    if (window.localStorage.getItem('accessToken')) {
+      this.$router.replace('/');
+    }
     // Message.success(this.backgroundImageUrl);
   },
   data() {
@@ -53,10 +55,11 @@ export default {
   },
   methods: {
     toNmoSkin() {
-      this.$getRequest('/auth/nmo_skin').then(response => {
-        this.$message.success(response.toString());
-        if (response.code === 0) {
+      this.$getRequest('/auth/nmo-skin').then(response => {
+        if (response.code === 200) {
           window.location.href = response.payload.redirect;
+        } else if (response.code === 404) {
+          Message.error(response.message);
         }
       });
     },

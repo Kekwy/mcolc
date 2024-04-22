@@ -7,8 +7,8 @@ import router from "../router";
 // 请求拦截器
 axios.interceptors.request.use(config => {
     // 如果存在 token，请求携带这个 token
-    if (window.sessionStorage.getItem('tokenStr')) {
-        config.headers['Authorization'] = window.sessionStorage.getItem('tokenStr');
+    if (window.sessionStorage.getItem('accessToken')) {
+        config.headers['Authorization'] = 'Bearer' + window.sessionStorage.getItem('accessToken');
     }
     return config;
 }, error => {
@@ -20,15 +20,15 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(success => {
     // 业务逻辑错误
     if (success.status && success.status === 200) {
-        // json 对象（success.data）中包含：code、message、object
-        if (success.data.code === 500 || success.data.code === 401 || success.data.code === 403) {
-            Message.error({message: success.data.message});
-            return;
-        }
-        // 判断后端是否发来提示信息
-        if (success.data.message) {
-            Message.success({message: success.data.message});
-        }
+        // // json 对象（success.data）中包含：code、message、object
+        // if (success.data.code === 500 || success.data.code === 401 || success.data.code === 403) {
+        //     Message.error({message: success.data.message});
+        //     return;
+        // }
+        // // 判断后端是否发来提示信息
+        // if (success.data.message) {
+        //     Message.success({message: success.data.message});
+        // }
     }
     return success.data;
     // 后端接口没有成功调用
