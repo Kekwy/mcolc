@@ -31,7 +31,23 @@ https://blog.csdn.net/yiifaa/article/details/77939282 resttemplate 传输表单
 
 // TODO：需要处理第三方登录的情况。
 
+【错误的】需要使用 JSON 进行序列化的属性对应的getter和setter方法必须要包含get与set前缀
+
+问题记录：
+
+MC的oauth认证需要用指定的client id，详见wiki；
+
+对于回调url确定的oauth应用，想要在前端项目中获取其code参数，可以考虑使用前端项目管理一个独立的web容器（弹窗），并监听其加载完成事件。
+
 ## 参考资料
 
 https://blog.biduang.cn/archives/60/
+
+https://learn.microsoft.com/zh-cn/entra/identity-platform/v2-oauth2-auth-code-flow
+
+https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8
+
+https://zhuanlan.zhihu.com/p/344830045
+
+https://www.bilibili.com/read/cv8722213/
 
