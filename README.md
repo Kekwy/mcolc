@@ -39,6 +39,9 @@ MC的oauth认证需要用指定的client id，详见wiki；
 
 对于回调url确定的oauth应用，想要在前端项目中获取其code参数，可以考虑使用前端项目管理一个独立的web容器（弹窗），并监听其加载完成事件。
 
+// TODO: 想办法增强鲁棒性
+
+
 ## 参考资料
 
 https://blog.biduang.cn/archives/60/
@@ -51,3 +54,4 @@ https://zhuanlan.zhihu.com/p/344830045
 
 https://www.bilibili.com/read/cv8722213/
 
+https://www.curseforge.com/minecraft/mc-mods/iconexporter 导出方块图标

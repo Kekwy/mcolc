@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GameRoleDetails {
 
-    private String roleName;
-    private String uuid;
+    private String name;
+    private String id;
 
 }

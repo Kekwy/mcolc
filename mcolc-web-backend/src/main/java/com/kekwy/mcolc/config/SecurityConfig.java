@@ -37,7 +37,8 @@ public class SecurityConfig {
                                     "/doc.html",
                                     "/webjars/**",
                                     "/swagger-resources/**",
-                                    "/v3/api-docs/**"
+                                    "/v3/api-docs/**",
+                                    "/item/icon/**"
                             ).permitAll()
                             // 除了上面，所有请求都要拦截
                             .anyRequest().authenticated();

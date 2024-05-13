@@ -44,7 +44,7 @@ public class ExampleMod implements ModInitializer {
 		// 注册用于接收 Web 请求的自定义网络插件
 		// 创建并启动一个简单的 HTTP 服务器，监听指定端口
 		try {
-			HttpServer httpServer = HttpServer.create(new InetSocketAddress(8081), 0);
+			HttpServer httpServer = HttpServer.create(new InetSocketAddress(27272), 0);
 			httpServer.createContext("/inventory", exchange -> {
 				// 解析请求头中的玩家 UUID
 				String playerUUID = exchange.getRequestHeaders().getFirst("Player-UUID");

@@ -36,3 +36,7 @@ spring:
     username: demo
     password:
 
+  web:
+    resources:
+      static-locations:
+
