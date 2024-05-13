@@ -95,6 +95,14 @@ public class HttpListener {
         // 获取饱食度
         playerDetails.addProperty("hunger", player.getHungerManager().getFoodLevel());
 
+        // 获取经验值
+        JsonObject experience = new JsonObject();
+
+        experience.addProperty("level", player.experienceLevel);
+        experience.addProperty("progress", player.experienceProgress);
+
+        experience.add("experience", experience);
+
         // TODO: 获取当前BUFF
         playerDetails.addProperty("buff", "");
 
