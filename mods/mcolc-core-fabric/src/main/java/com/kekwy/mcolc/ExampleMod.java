@@ -32,35 +32,18 @@ public class ExampleMod implements ModInitializer {
 	// 自定义物品
 //	public static final Item CUSTOM_ITEM = new Item(new FabricItemSettings());
 
-	private MinecraftServer server;
-
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		// 服务器启动后获取服务器实例
-		ServerLifecycleEvents.SERVER_STARTED.register(server -> this.server = server);
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+			new HttpListener(server).start();
+		});
 		// 注册用于接收 Web 请求的自定义网络插件
 		// 创建并启动一个简单的 HTTP 服务器，监听指定端口
-		try {
-			HttpServer httpServer = HttpServer.create(new InetSocketAddress(27272), 0);
-			httpServer.createContext("/inventory", exchange -> {
-				// 解析请求头中的玩家 UUID
-				String playerUUID = exchange.getRequestHeaders().getFirst("Player-UUID");
-				// 获取玩家背包中的物品信息
-				JsonObject inventoryData = getPlayerInventoryData(playerUUID);
-				// 将物品信息作为 JSON 数据返回给请求方
-				String response = inventoryData.toString();
-				exchange.sendResponseHeaders(200, response.getBytes().length);
-				exchange.getResponseBody().write(response.getBytes());
-				exchange.close();
-			});
-			httpServer.setExecutor(Executors.newCachedThreadPool());
-			httpServer.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 // 对修改箱子的一些尝试
 ////		Registry.register(Registries.ITEM, new Identifier())
 //		LOGGER.info("Hello Fabric world!");
@@ -76,23 +59,6 @@ public class ExampleMod implements ModInitializer {
 	}
 
 	// 获取玩家背包中的物品信息
-	private JsonObject getPlayerInventoryData(String playerUUID) {
-		JsonObject inventoryData = new JsonObject();
-		if (server != null) {
-			PlayerEntity player = server.getPlayerManager().getPlayer(playerUUID);
-			if (player != null) {
-				JsonObject inventoryItems = new JsonObject();
-				for (int i = 0; i < player.getInventory().size(); i++) {
-					ItemStack stack = player.getInventory().getStack(i);
-					if (!stack.isEmpty()) {
-						inventoryItems.addProperty(Integer.toString(i), stack.getItem().getTranslationKey());
-					}
-				}
-				inventoryData.addProperty("player", player.getName().getString());
-				inventoryData.add("items", inventoryItems);
-			}
-		}
-		return inventoryData;
-	}
+
 
 }

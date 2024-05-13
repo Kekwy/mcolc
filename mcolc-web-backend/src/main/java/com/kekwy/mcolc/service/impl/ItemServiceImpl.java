@@ -23,6 +23,7 @@ public class ItemServiceImpl implements ItemService {
     public Map<String, String> getInventory(String name, String id) {
         // 访问模组中的web服务器，从中获取角色数据
         RestTemplate restTemplate = new RestTemplate();
+
 //        restTemplate.
         return Map.of(
                 "username", name,
