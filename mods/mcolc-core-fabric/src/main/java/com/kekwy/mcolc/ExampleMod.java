@@ -27,10 +27,12 @@ public class ExampleMod implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
-    public static final Logger LOGGER = LoggerFactory.getLogger("modid");
+    public static final Logger LOGGER = LoggerFactory.getLogger("Mcolc Core");
 
 	// 自定义物品
 //	public static final Item CUSTOM_ITEM = new Item(new FabricItemSettings());
+
+	private HttpListener httpListener;
 
 	@Override
 	public void onInitialize() {
@@ -39,8 +41,13 @@ public class ExampleMod implements ModInitializer {
 		// Proceed with mild caution.
 		// 服务器启动后获取服务器实例
 		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-			new HttpListener(server).start();
+			httpListener = new HttpListener(server);
+			httpListener.start();
 		});
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			httpListener.stop();
+		});
+
 		// 注册用于接收 Web 请求的自定义网络插件
 		// 创建并启动一个简单的 HTTP 服务器，监听指定端口
 
@@ -57,6 +64,8 @@ public class ExampleMod implements ModInitializer {
 //			chest.setStack(2, newItemStack); // 根据需要设置位置
 //		}
 	}
+
+
 
 	// 获取玩家背包中的物品信息
 

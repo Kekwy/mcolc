@@ -21,6 +21,7 @@ public class MicrosoftGameRoleService implements GameRoleService {
 
     @Override
     public GameRoleDetails getGameRoleDetails(String accessToken) {
+        // 缓存 redis
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", accessToken);
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
