@@ -28,6 +28,7 @@ module.exports = {
     devServer: {
         host: 'localhost',
         port: 8080,
-        proxy: proxyObj
+        proxy: proxyObj,
+        allowedHosts: ['stcos.kekwy.com', 'mcolc.kekwy.com'],
     }
 }

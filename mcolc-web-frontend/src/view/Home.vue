@@ -11,10 +11,10 @@ export default {
     }
   },
   mounted() {
-    if (!window.localStorage.getItem('accessToken')) {
+    if (!window.localStorage.getItem('access_token')) {
       this.$router.replace('/login');
     } else {
-      this.$getRequest('/user/inventory').then(response => {
+      this.$getRequest('/item/inventory').then(response => {
         this.inventory = response.payload;
       });
     }

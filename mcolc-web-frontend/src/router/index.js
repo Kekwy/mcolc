@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from "@/view/Login.vue";
 import LoginSuccess from "@/view/LoginSuccess.vue";
 import Home from "@/view/Home.vue";
+import AuthTest from "@/view/AuthTest.vue";
 
 // 安装路由
 Vue.use(VueRouter)
@@ -24,6 +25,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
+    },
+    {
+        path: '/auth-test',
+        name: 'AuthTest',
+        component: AuthTest
     }
 ]
 

@@ -8,8 +8,15 @@ import java.io.IOException;
 
 @RequestMapping("/auth")
 public interface AuthAPI {
+
+    @GetMapping("/token")
+    ResponseEntity<ResponseBody> getAccessToken(@RequestParam("code") String code);
+
+    @GetMapping()
+    ResponseEntity<ResponseBody> redirectToAuthPage();
+
     @GetMapping("/{authName}")
-    ResponseEntity<ResponseBody> redirectToAuthPage(@PathVariable("authName") String authName) throws IOException;
+    ResponseEntity<ResponseBody> redirectToAuthPage(@PathVariable("authName") String authName);
 
     @GetMapping("/{authName}/token")
     ResponseEntity<ResponseBody> getAuthToken(@PathVariable("authName") String authName, @RequestParam("code") String authCode);

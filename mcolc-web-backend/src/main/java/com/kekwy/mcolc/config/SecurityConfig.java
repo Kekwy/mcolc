@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                                         /____/                        /____/
  */
 
+@SuppressWarnings({"Convert2MethodRef", "CodeBlock2Expr"})
 @Configuration
 public class SecurityConfig {
 
@@ -40,6 +41,10 @@ public class SecurityConfig {
                             ).permitAll()
                             // 除了上面，所有请求都要拦截
                             .anyRequest().authenticated();
+                }).logout(configurer -> {
+                    configurer.disable();
+                }).requestCache(configurer -> {
+                    configurer.disable();
                 })
 //                .formLogin(configurer -> {
 //                    configurer.loginPage("/login");
@@ -52,6 +57,7 @@ public class SecurityConfig {
 //                            .logoutSuccessUrl("/");
 //                })
                 // 添加自定义认证过滤器
+                // TODO: 2024/4/30 处理皮肤站登录的情况
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

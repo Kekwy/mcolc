@@ -8,10 +8,10 @@ export default {
   name: "LoginSuccess",
   mounted() {
     let authName = this.$route.params.authName;
-    this.$getRequest('/auth/' + authName + '/token?code=' + this.$route.query.code).then(response => {
+    this.$getRequest('/auth/token?code=' + this.$route.query.code).then(response => {
       if (response.payload.token) {
-        window.localStorage.setItem('accessToken', response.payload.token);
-        window.localStorage.setItem('authService', authName);
+        window.localStorage.setItem('access_token', response.payload.token);
+        // window.localStorage.setItem('authService', authName);
       }
       this.$router.replace('/');
     });

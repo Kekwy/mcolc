@@ -10,9 +10,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,15 @@ public class Oauth2AuthenticationTokenFilter extends OncePerRequestFilter {
 
     private ApplicationContext applicationContext;
 
+    private GameRoleService gameRoleService;
+
     private ObjectMapper objectMapper;
+
+
+    @Autowired
+    public void setGameRoleService(@Qualifier("microsoftGameRoleService") GameRoleService gameRoleService) {
+        this.gameRoleService = gameRoleService;
+    }
 
     @Autowired
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -43,38 +53,40 @@ public class Oauth2AuthenticationTokenFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String authToken = request.getHeader("Authorization");
-        String authService = request.getHeader("AuthorizationService");
-        String roleName = request.getHeader("RoleName");
+//        String authService = request.getHeader("AuthorizationService");
+//        String roleName = request.getHeader("RoleName");
         // 存在 token
         if (authToken != null) {
             // 访问认证服务器获取游戏角色信息
-            GameRoleService service = (GameRoleService) applicationContext.getBean(authService + "GameRoleService");
-            List<GameRoleDetails> gameRoleDetailsList = service.getGameRoleDetailsList(authToken);
-            if (!gameRoleDetailsList.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null) {
-                GameRoleDetails gameRoleDetails = null;
-                if (gameRoleDetailsList.size() > 1) {   // 当前游戏账户下有多个角色
-                    if (roleName != null) {             // 若用户已经选择了角色，则从其账户下找到用户选择的角色
-                        for (GameRoleDetails details : gameRoleDetailsList) {
-                            if (details.getRoleName().equals(roleName)) {
-                                gameRoleDetails = details;
-                                break;
-                            }
-                        }
-                    }
-                    if (gameRoleDetails == null) {      // 需要用户手动选择一个游戏角色
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        response.setContentType("application/json");
-                        ResponseBuilder builder = new ResponseBuilder()
-                                .code(1).message("你有多个角色").payload(gameRoleDetailsList);
-                        response.getWriter().write(objectMapper.writeValueAsString(builder.build()));
-                        return;
-                    }
-                } else { // 只有一个角色
-                    gameRoleDetails = gameRoleDetailsList.get(0);
-                }
+//            GameRoleService service = (GameRoleService) applicationContext.getBean(authService + "GameRoleService");
+//            List<GameRoleDetails> gameRoleDetailsList = gameRoleService.getGameRoleDetailsList(authToken);
+            GameRoleDetails gameRoleDetails = gameRoleService.getGameRoleDetails(authToken);
+            if (gameRoleDetails != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//                GameRoleDetails gameRoleDetails = null;
+//                if (gameRoleDetailsList.size() > 1) {   // 当前游戏账户下有多个角色
+//                    if (roleName != null) {             // 若用户已经选择了角色，则从其账户下找到用户选择的角色
+//                        for (GameRoleDetails details : gameRoleDetailsList) {
+//                            if (details.getRoleName().equals(roleName)) {
+//                                gameRoleDetails = details;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    if (gameRoleDetails == null) {      // 需要用户手动选择一个游戏角色
+//                        response.setStatus(HttpServletResponse.SC_OK);
+//                        response.setContentType("application/json");
+//                        ResponseBuilder builder = new ResponseBuilder()
+//                                .code(1).message("你有多个角色").payload(gameRoleDetailsList);
+//                        response.getWriter().write(objectMapper.writeValueAsString(builder.build()));
+//                        return;
+//                    }
+//                } else { // 只有一个角色
+//                    gameRoleDetails = gameRoleDetailsList.get(0);
+//                }
                 UsernamePasswordAuthenticationToken token = // 在上下文中添加认证信息
-                        new UsernamePasswordAuthenticationToken(authToken, null);
-                token.setDetails(new AuthenticationDetails(gameRoleDetails, service,
+                        new UsernamePasswordAuthenticationToken(authToken, null,
+                                /* 如果不添加权限对象则会被视为未认证 */ List.of(new SimpleGrantedAuthority("ROLE")));
+                token.setDetails(new AuthenticationDetails(gameRoleDetails, gameRoleService,
                         new WebAuthenticationDetailsSource().buildDetails(request)));
                 SecurityContextHolder.getContext().setAuthentication(token);
             }

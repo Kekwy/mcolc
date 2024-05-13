@@ -10,14 +10,25 @@ spring:
         registration:
           nmo-skin:
             client-id: 1
-            client-secret: MhaMqg93WiyxX7rOMn37M1kEl768yAPFA8rB2Lhr
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8080/login-success/nmo-skin"
+            redirect-uri: http://localhost:8080/login-success/nmo-skin
             scope:
+          microsoft:
+#            client-id: 64cfe8ec-bd27-4555-b5e2-c5cc5aaa06ef
+            client-id: 288ec5dd-6736-4d4b-9b96-30e083a8cad2
+            authorization-grant-type: authorization_code
+#            redirect-uri: http://localhost:8080/login-success/microsoft
+            redirect-uri: http://localhost:29116/authentication-response
+            scope:
+              - XboxLive.signin
         provider:
           nmo-skin:
             authorization-uri: https://skin.nmo.net.cn/oauth/authorize
             token-uri: https://skin.nmo.net.cn/oauth/token
+          microsoft:
+            authorization-uri: https://login.live.com/oauth20_authorize.srf
+            token-uri: https://login.live.com/oauth20_token.srf
+
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/mcolc?serverTimezone=GMT%2B8&characterEncoding=utf-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true

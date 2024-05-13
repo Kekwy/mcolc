@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+'autonumber
+
+skin rose
+
+participant "建表 SQL 语句" as a
+participant EFK as e
+participant cmdb_nl2sql as b
+
+a->e: 从建表 SQL 中提取实体名加入 EFK 系统中，并于该实体所在表的列名建立映射
+group 使用 ES 库进行实体名匹配
+b->e: 1. 将从查询中提取的实体名与已有实体名匹配相似度
+activate e
+activate b
+b <- e: 2. 按相似度返回实体名列表，若有多个实体名则需要用户确认
+b -> e: 3. 确认结果
+deactivate b
+e -> e: 4. 将用户确认结果与当前从查询中提取的实体名建立映射，并加入 EFK 系统中
+deactivate e
+end
+
+
+@enduml

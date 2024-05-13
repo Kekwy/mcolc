@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface GameRoleService {
 
-    List<GameRoleDetails> getGameRoleDetailsList(String authToken);
+    GameRoleDetails getGameRoleDetailsList(String authToken);
+
+    GameRoleDetails getGameRoleDetails(String accessToken);
 }

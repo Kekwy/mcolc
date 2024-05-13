@@ -17,6 +17,17 @@
         </el-tooltip>
       </div>
     </el-card>
+    <el-dialog
+        title="提示"
+        :visible.sync="showPopup"
+        width="30%"
+        :before-close="handleClose">
+      <iframe ref="popupIframe" width="600" height="400"></iframe>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showPopup = false">取 消</el-button>
+        <el-button type="primary" @click="showPopup = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
   <!--    <el-container>-->
   <!--      <el-header>Header</el-header>-->
@@ -34,6 +45,48 @@ import {Message} from "element-ui";
 export default {
   name: "Login",
   mounted() {
+    // const popup = window.open(this.AUTH_URL);
+
+
+    // 都是对 dom 的操作而不是浏览器窗口，跨域失败，跨域失败，全是跨域失败！
+    // popup.close();
+    // popup.setInterval(()=>{
+    //
+    // });
+    // window.document.domain = 'www.baidu.com';
+    // this.$message.info(popup.location.href);
+    // const intervalId = window.setInterval(() => {
+    //   // // const popupUrl = popup.location.href;
+    //   // const popupUrl = popup.document.URL;
+    //   // this.$message.info(popupUrl);
+    //   // if (popupUrl.includes('code')) {
+    //   //   popup.close()
+    //   // }
+    //   popup.addEventListener('resize', () => {
+    //     this.$message.info('fadsf');
+    //   });
+    // }, 1000);
+    //
+    // 给新窗口添加 load 事件监听器
+    // if (!popup.closed) {
+    //   this.$message.info('sadfsad');
+    // }
+    // popup.addEventListener('pageshow', ()=>{
+    //   // window.close();
+    //   popup.close();
+    //   console.log('sadfdsaf')
+    //   // // 实时获取新窗口的 URL
+    //   // const popupUrl = popup.location.href;
+    //   // this.$message.info('弹窗 URL：' + popupUrl);
+    //   //
+    //   // // 在这里可以根据弹窗的 URL 进行相应的操作
+    //   // // 例如根据特定的 URL 触发关闭窗口
+    //   // if (popupUrl.includes('closePopup')) {
+    //   //   popup.close(); // 关闭窗口
+    //   // }
+    // }, true);
+
+
     if (window.localStorage.getItem('accessToken')) {
       this.$router.replace('/');
     }
@@ -42,6 +95,12 @@ export default {
   data() {
     return {
       backgroundImageIndexBound: [0, 2],
+      showPopup: false,
+      AUTH_URL: 'https://login.live.com/oauth20_authorize.srf' +
+                ' ?client_id=00000000402b5328' +
+                ' &response_type=code' +
+                ' &scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL' +
+                ' &redirect_uri=https%3A%2F%2Fwww.baidu.com'//https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf'
     }
   },
   computed: {
@@ -64,8 +123,14 @@ export default {
       });
     },
     toMicrosoft() {
-      this.$getRequest('/auth/microsoft').then(response => {
-        window.location.href = response.redirect;
+      // this.showPopup = true;
+      // this.$refs.popupIframe.src = 'https://login.live.com/oauth20_authorize.srf\n' +
+      //     ' ?client_id=00000000402b5328\n' +
+      //     ' &response_type=code\n' +
+      //     ' &scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL\n' +
+      //     ' &redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf';
+      this.$getRequest('/auth').then(response => {
+        window.location.href = response.payload.redirect;
       });
     },
     random(min, max) {

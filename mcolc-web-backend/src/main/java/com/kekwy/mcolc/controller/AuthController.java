@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 public class AuthController implements AuthAPI {
 
@@ -19,6 +21,22 @@ public class AuthController implements AuthAPI {
     @Autowired
     public void setAuthService(AuthService authService) {
         this.authService = authService;
+    }
+
+    @Override
+    public ResponseEntity<ResponseBody> getAccessToken(String code) {
+        String token = authService.getAuthToken(code);
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.code(0).payload(new Token(token));
+        return ResponseEntity.ok(builder.build());
+    }
+
+    @Override
+    public ResponseEntity<ResponseBody> redirectToAuthPage() {
+        String url = authService.getAuthUrl();
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.code(0).payload(new RedirectUrl(url)).build();
+        return ResponseEntity.ok(builder.build());
     }
 
     @Override

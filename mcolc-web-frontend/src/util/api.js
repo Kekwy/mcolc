@@ -7,10 +7,9 @@ import router from "../router";
 // 请求拦截器
 axios.interceptors.request.use(config => {
     // 如果存在 token，请求携带这个 token
-    if (window.localStorage.getItem('accessToken')
-        && window.localStorage.getItem('authService')) {
-        config.headers['Authorization'] = 'Bearer' + window.localStorage.getItem('accessToken');
-        config.headers['AuthorizationService'] = window.localStorage.getItem('authService');
+    if (window.localStorage.getItem('access_token')) {
+        config.headers['Authorization'] = window.localStorage.getItem('access_token');
+        // config.headers['AuthorizationService'] = window.localStorage.getItem('authService');
     }
     return config;
 }, error => {
@@ -54,7 +53,7 @@ axios.interceptors.response.use(success => {
 });
 
 // post 请求的前置路径
-let base = '/api/';
+let base = '/api';
 
 // 封装请求
 export const postRequest = (url, params) => {

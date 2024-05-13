@@ -11,9 +11,14 @@ import java.util.List;
 public class NmoSkinGameRoleService implements GameRoleService {
 
     @Override
-    public List<GameRoleDetails> getGameRoleDetailsList(String authToken) {
+    public GameRoleDetails getGameRoleDetailsList(String authToken) {
         RestTemplate restTemplate = new RestTemplate();
 //        restTemplate.exchange()
-        return List.of(new GameRoleDetails("null", "null"), new GameRoleDetails("null", "null"));
+        return new GameRoleDetails("null", "null");
+    }
+
+    @Override
+    public GameRoleDetails getGameRoleDetails(String authToken) {
+        return null;
     }
 }
