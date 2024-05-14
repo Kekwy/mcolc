@@ -26,7 +26,7 @@ public class HttpListener {
         this.minecraftServer = minecraftServer;
         try {
             httpServer = HttpServer.create(new InetSocketAddress(27272), 0);
-            httpServer.createContext("/inventory", this::inventoryHandler);
+            httpServer.createContext("/inventory", this::handleInventory);
             httpServer.setExecutor(Executors.newCachedThreadPool());
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class HttpListener {
         httpServer.stop(10);
     }
 
-    private void inventoryHandler(HttpExchange exchange) {
+    private void handleInventory(HttpExchange exchange) {
         try {
             Map<String, String> queryParams = getQueryParams(exchange.getRequestURI());
             String name = queryParams.getOrDefault("name", "");
@@ -71,7 +71,15 @@ public class HttpListener {
                 array.add(JsonNull.INSTANCE);
             } else {
                 JsonObject object = new JsonObject();
-                object.addProperty("key", itemStack.getTranslationKey());
+                String key = itemStack.getTranslationKey();
+                String name;
+                if (ExampleMod.LANGUAGE != null) {
+                    name = ExampleMod.LANGUAGE.get(key).getAsString(); // TODO: 进一步考虑如何处理多语言
+                } else {
+                    name = itemStack.getName().getString();
+                }
+                object.addProperty("key", key);
+                object.addProperty("name", name);
 //                object.addProperty("name", itemStack.getName().getString()); 从服务端仅能获取英文名
                 object.addProperty("damage", itemStack.getDamage());
                 object.addProperty("maxDamage", itemStack.getMaxDamage());

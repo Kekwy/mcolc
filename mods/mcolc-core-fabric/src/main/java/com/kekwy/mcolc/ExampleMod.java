@@ -1,6 +1,8 @@
 package com.kekwy.mcolc;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpServer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -20,36 +22,57 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 
 
 public class ExampleMod implements ModInitializer {
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
+    // This logger is used to write text to the console and the log file.
+    // It is considered best practice to use your mod id as the logger's name.
+    // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("Mcolc Core");
 
-	// 自定义物品
+    public static JsonObject LANGUAGE;
+
+    // 自定义物品
 //	public static final Item CUSTOM_ITEM = new Item(new FabricItemSettings());
 
-	private HttpListener httpListener;
+    private HttpListener httpListener;
 
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-		// 服务器启动后获取服务器实例
-		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-			httpListener = new HttpListener(server);
-			httpListener.start();
-		});
-		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-			httpListener.stop();
-		});
+    @Override
+    public void onInitialize() {
+        // This code runs as soon as Minecraft is in a mod-load-ready state.
+        // However, some things (like resources) may still be uninitialized.
+        // Proceed with mild caution.
 
-		// 注册用于接收 Web 请求的自定义网络插件
-		// 创建并启动一个简单的 HTTP 服务器，监听指定端口
+        // 读取本地化文件
+        try {
+            Path filePath = Paths.get("./language.json");
+            String jsonString = Files.readString(filePath);
+            LOGGER.error(jsonString);
+            JsonElement jsonElement = JsonParser.parseString(jsonString);
+            LANGUAGE = jsonElement.getAsJsonObject();
+            LOGGER.info("Language file loaded 测试: " + LANGUAGE.get("language.name").getAsString());
+        } catch (IOException e) {
+            // 没有本地化文件则使用默认语言
+            LANGUAGE = null;
+        }
+
+        // 服务器启动后获取服务器实例
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+            httpListener = new HttpListener(server);
+            httpListener.start();
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+            httpListener.stop();
+        });
+
+        // 注册用于接收 Web 请求的自定义网络插件
+        // 创建并启动一个简单的 HTTP 服务器，监听指定端口
 
 // 对修改箱子的一些尝试
 ////		Registry.register(Registries.ITEM, new Identifier())
@@ -63,11 +86,10 @@ public class ExampleMod implements ModInitializer {
 //			ItemStack newItemStack = new ItemStack(Blocks.OAK_PLANKS, 45);
 //			chest.setStack(2, newItemStack); // 根据需要设置位置
 //		}
-	}
+    }
 
 
-
-	// 获取玩家背包中的物品信息
+    // 获取玩家背包中的物品信息
 
 
 }
