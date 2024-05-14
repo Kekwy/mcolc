@@ -36,8 +36,6 @@ public class ExampleMod implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("Mcolc Core");
 
-    public static JsonObject LANGUAGE;
-
     // 自定义物品
 //	public static final Item CUSTOM_ITEM = new Item(new FabricItemSettings());
 
@@ -48,19 +46,6 @@ public class ExampleMod implements ModInitializer {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
-
-        // 读取本地化文件
-        try {
-            Path filePath = Paths.get("./language.json");
-            String jsonString = Files.readString(filePath);
-            LOGGER.error(jsonString);
-            JsonElement jsonElement = JsonParser.parseString(jsonString);
-            LANGUAGE = jsonElement.getAsJsonObject();
-            LOGGER.info("Language file loaded 测试: " + LANGUAGE.get("language.name").getAsString());
-        } catch (IOException e) {
-            // 没有本地化文件则使用默认语言
-            LANGUAGE = null;
-        }
 
         // 服务器启动后获取服务器实例
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {

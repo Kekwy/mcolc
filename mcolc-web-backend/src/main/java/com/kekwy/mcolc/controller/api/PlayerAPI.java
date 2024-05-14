@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/item")
-public interface ItemAPI {
-    @GetMapping("/inventory")
-    ResponseEntity<ResponseBody> inventory();
+@RequestMapping("/player")
+public interface PlayerAPI {
+    @GetMapping("/details")
+    ResponseEntity<ResponseBody> details();
 
     @GetMapping("/icon/{name}")
     ResponseEntity<Resource> icon(@PathVariable("name") String name);

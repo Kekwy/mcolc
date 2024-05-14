@@ -3,6 +3,11 @@ spring.application.name: mcolc-web-backend
 server:
   port: 8081
 
+mcolc:
+  ip: localhost
+  port: 27272
+  language: ZH_CN
+
 spring:
   security:
     oauth2:

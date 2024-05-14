@@ -9,12 +9,14 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.collection.DefaultedList;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
 public class HttpListener {
@@ -49,6 +51,10 @@ public class HttpListener {
 
             // 获取玩家背包中的物品信息
             JsonObject inventoryData = getPlayerDetails(uuid, name);
+
+            // 设置响应头中的 Content-Type
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+
             // 将物品信息作为 JSON 数据返回给请求方
             if (inventoryData == null) {
                 exchange.sendResponseHeaders(403, 0);
@@ -64,23 +70,15 @@ public class HttpListener {
         }
     }
 
-    private JsonArray getItems(DefaultedList<ItemStack> list) {
+    private JsonArray getItems(List<ItemStack> list) {
         JsonArray array = new JsonArray();
         for (ItemStack itemStack : list) {
             if (itemStack.isEmpty()) {
                 array.add(JsonNull.INSTANCE);
             } else {
                 JsonObject object = new JsonObject();
-                String key = itemStack.getTranslationKey();
-                String name;
-                if (ExampleMod.LANGUAGE != null) {
-                    name = ExampleMod.LANGUAGE.get(key).getAsString(); // TODO: 进一步考虑如何处理多语言
-                } else {
-                    name = itemStack.getName().getString();
-                }
-                object.addProperty("key", key);
-                object.addProperty("name", name);
-//                object.addProperty("name", itemStack.getName().getString()); 从服务端仅能获取英文名
+                object.addProperty("key", itemStack.getTranslationKey());
+                object.addProperty("name", itemStack.getName().getString()); // 从服务端仅能获取英文名
                 object.addProperty("damage", itemStack.getDamage());
                 object.addProperty("maxDamage", itemStack.getMaxDamage());
                 object.addProperty("count", itemStack.getCount());
@@ -96,6 +94,8 @@ public class HttpListener {
             return null;
         }
         JsonObject playerDetails = new JsonObject();
+
+        playerDetails.addProperty("name", name);
 
         // 获取生命值
         playerDetails.addProperty("health", player.getHealth());
@@ -118,13 +118,15 @@ public class HttpListener {
         PlayerInventory inventory = player.getInventory();
         JsonObject inventoryData = new JsonObject();
 
-        JsonArray mainList = getItems(inventory.main);
+        JsonArray hotBarList = getItems(inventory.main.subList(0, 9));
+        JsonArray mainList = getItems(inventory.main.subList(9, inventory.main.size()));
         JsonArray armorList = getItems(inventory.armor);
         JsonArray offHandList = getItems(inventory.offHand);
 
         inventoryData.add("main", mainList);
         inventoryData.add("armor", armorList);
         inventoryData.add("offHand", offHandList);
+        inventoryData.add("hotBar", hotBarList);
 
         playerDetails.add("inventory", inventoryData);
 
