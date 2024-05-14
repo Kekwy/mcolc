@@ -26,7 +26,7 @@ public class HttpListener {
         this.minecraftServer = minecraftServer;
         try {
             httpServer = HttpServer.create(new InetSocketAddress(27272), 0);
-            httpServer.createContext("/inventory", this::handleInventory);
+            httpServer.createContext("/player", this::handleInventory);
             httpServer.setExecutor(Executors.newCachedThreadPool());
         } catch (IOException e) {
             e.printStackTrace();
