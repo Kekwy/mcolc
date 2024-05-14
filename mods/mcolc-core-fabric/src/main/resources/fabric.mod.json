@@ -12,7 +12,7 @@
 		"sources": "https://github.com/Kekwy/mcolc"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/mcolc/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
