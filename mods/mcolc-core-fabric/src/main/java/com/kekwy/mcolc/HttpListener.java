@@ -109,7 +109,7 @@ public class HttpListener {
         experience.addProperty("level", player.experienceLevel);
         experience.addProperty("progress", player.experienceProgress);
 
-        experience.add("experience", experience);
+        playerDetails.add("experience", experience);
 
         // TODO: 获取当前BUFF
         playerDetails.addProperty("buff", "");
