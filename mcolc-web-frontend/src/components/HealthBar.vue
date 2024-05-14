@@ -41,7 +41,7 @@ export default {
         full_alt:"health_full",
 
         half_image:"/images/health_half.png",
-        full_alt:"health_half",
+        half_alt:"health_half",
 
         empty_image:"/images/health_empty.png",
         empty_alt:"health_empty",
@@ -50,6 +50,7 @@ export default {
       }
   },
   mounted(){
+    this.hp=this.hp/2;
     this.addHealthPicture(this.HealthBarList); // 添加血条对应的图片序列
 
   },
@@ -65,7 +66,7 @@ export default {
   },
   methods:{
     addHealthPicture(HealthBarList) {
-          const full = Math.floor(this.hp);
+          const full = Math.round(this.hp);
           const half = Math.round((this.hp - full) * 2);
           const empty = Math.max(0, this.maxHp - full - half);
             for (let i = 0; i < full; i++) {

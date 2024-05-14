@@ -50,8 +50,8 @@ export default {
       }
   },
   mounted(){
+    this.hg=this.hg/2;
     this.addHgPicture(this.HgBarList); // 添加血条对应的图片序列
-
   },
   props: {
     hg: {
