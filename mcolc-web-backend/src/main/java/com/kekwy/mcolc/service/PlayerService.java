@@ -7,5 +7,4 @@ public interface PlayerService {
 
     PlayerDetails getPlayerDetails(String name, String id);
 
-    Resource getIcon(String name);
 }

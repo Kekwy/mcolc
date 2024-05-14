@@ -7,8 +7,6 @@ import com.kekwy.mcolc.service.PlayerService;
 import com.kekwy.mcolc.util.HttpRequestUtil;
 import com.kekwy.mcolc.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,14 +15,6 @@ import java.util.List;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
-
-    private ResourceLoader resourceLoader;
-
-    @Autowired
-    public void setResourceLoader(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
-
 
     private McolcConfig mcolcConfig;
 
@@ -61,10 +51,4 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    @Override
-    public Resource getIcon(String name) {
-        Resource resource = resourceLoader.getResource("classpath:/static/icons/" + name + ".png");
-        if (resource.exists()) return resource;
-        else return null;
-    }
 }

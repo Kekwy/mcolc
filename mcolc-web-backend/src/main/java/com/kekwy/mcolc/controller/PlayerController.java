@@ -41,13 +41,4 @@ public class PlayerController implements PlayerAPI {
         return ResponseEntity.ok(builder.build());
     }
 
-    @Override
-    public ResponseEntity<Resource> icon(String name) {
-        Resource resource = playerService.getIcon(name);
-        if (resource != null) {
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(resource);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
