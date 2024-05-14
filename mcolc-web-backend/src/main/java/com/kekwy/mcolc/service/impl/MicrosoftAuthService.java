@@ -4,7 +4,6 @@ import com.kekwy.mcolc.model.vo.TokenUhs;
 import com.kekwy.mcolc.model.vo.XboxLiveAuthRequest;
 import com.kekwy.mcolc.model.vo.XboxLiveTokenResponse;
 import com.kekwy.mcolc.service.AuthService;
-import com.kekwy.mcolc.util.HttpLoggingInterceptor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,12 +60,12 @@ public class MicrosoftAuthService implements AuthService {
             String grantType = clientRegistration.getAuthorizationGrantType().getValue();
             String redirectUri = clientRegistration.getRedirectUri();
             String clientId = clientRegistration.getClientId();
-//            String clientSecret = clientRegistration.getClientSecret();
+            String clientSecret = clientRegistration.getClientSecret();
 
             MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
             requestBody.add("grant_type", grantType);
             requestBody.add("client_id", clientId);
-//            requestBody.add("client_secret", clientSecret);
+            requestBody.add("client_secret", clientSecret);
             requestBody.add("redirect_uri", redirectUri);
             requestBody.add("code", code);
 
