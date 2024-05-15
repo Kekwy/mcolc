@@ -20,11 +20,11 @@ spring:
             scope:
           microsoft:
             client-id: 64cfe8ec-bd27-4555-b5e2-c5cc5aaa06ef
-#            client-id: 288ec5dd-6736-4d4b-9b96-30e083a8cad2
+            #            client-id: 288ec5dd-6736-4d4b-9b96-30e083a8cad2
             client-secret: ${MCOLC_AZURE_SECRET:null}
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login-success/microsoft
-#            redirect-uri: http://localhost:29116/authentication-response
+            #            redirect-uri: http://localhost:29116/authentication-response
             scope:
               - XboxLive.signin
         provider:
@@ -41,7 +41,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: demo
     password:
-
+  sql:
+    init:
+      schema-locations:
+        - classpath:sql/schema.sql
+      mode: always
 
   web:
     resources:

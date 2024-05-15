@@ -41,7 +41,7 @@ export default {
         full_alt:"health_full",
 
         half_image:"/images/health_half.png",
-        full_alt:"health_half",
+        half_alt:"health_half",
 
         empty_image:"/images/health_empty.png",
         empty_alt:"health_empty",

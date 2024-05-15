@@ -1,0 +1,1 @@
+Run the shell script, rabbitmq.sh, and visit "http://localhost:15672/" in browser.

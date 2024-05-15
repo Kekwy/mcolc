@@ -37,6 +37,7 @@ public class PlayerServiceImpl implements PlayerService {
             localizeItemName(playerDetails.getInventory().getArmor());
             localizeItemName(playerDetails.getInventory().getMain());
             localizeItemName(playerDetails.getInventory().getOffHand());
+            localizeItemName(playerDetails.getInventory().getHotBar());
             return playerDetails;
         }
         return null;
@@ -44,6 +45,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     private void localizeItemName(List<MCItem> items) {
         for (MCItem item : items) {
+            if (item == null) continue;
             String localizedName = mcolcConfig.getLocalizedName(item.getKey());
             if (localizedName != null) {
                 item.setName(localizedName);
