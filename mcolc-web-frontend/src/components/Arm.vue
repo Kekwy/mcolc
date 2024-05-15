@@ -21,34 +21,55 @@
 
 <template>
   <div class="container">
-  <div class="table">
-    <table>
-      <tr>
-        <td v-for="(item, colIndex) in images" :key="colIndex" :class="{ 'cell': item }">
-          <div class="cell-content">
-                  <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
-                  <img v-else class="empty-item" :src="item.src">
-                  <div  v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div>
+    <div class="table">
 
-
-  </div>    
       <table>
-        <tr>
-          <td v-for="(item, colIndex) in offHandimage" :key="colIndex" :class="{ 'cell': item }">
+        <tr >
+          <td v-for="(item, colIndex) in images" :key="colIndex" :class="{ 'cell': item }">
             <div class="cell-content">
-                    <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
-                    <img v-else class="empty-item" :src="item.src">
-                    <div  v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
-            </div>
+                <div class="item-wrapper">
+                    <el-tooltip class="toolitem" effect="dark" content="item.name" placement="top-start">
+                        <div slot="content">{{item.name}}</div>
+                        <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
+                        </el-tooltip>
+                    <img v-if="item.name=='tempEmpty'" class="empty-item" :src="item.src">
+                    <div v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
+                </div>
+                <div v-if="item.name!='tempEmpty' && item.count==1 && item.maxDamage!=0 " class="process-layout"> 
+                  <el-progress :define-back-color="black" :stroke-width="3" :show-text='false' :percentage="item.durability" status="success"></el-progress>
+                </div>
+              </div>
           </td>
         </tr>
       </table>
+
+      </div>
+  
+      <div>
+
+
+        <table>
+          <tr >
+            <td v-for="(item, colIndex) in offHandimage" :key="colIndex" :class="{ 'cell': item }">
+              <div class="cell-content">
+                  <div class="item-wrapper">
+                      <el-tooltip class="toolitem" effect="dark" content="item.name" placement="top-start">
+                          <div slot="content">{{item.name}}</div>
+                          <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
+                          </el-tooltip>
+                      <img v-if="item.name=='tempEmpty'" class="empty-item" :src="item.src">
+                      <div v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
+                  </div>
+                  <div v-if="item.name!='tempEmpty' && item.count==1 && item.maxDamage!=0 " class="process-layout"> 
+                    <el-progress :define-back-color="black" :stroke-width="3" :show-text='false' :percentage="item.durability" status="success"></el-progress>
+                  </div>
+                </div>
+            </td>
+          </tr>
+        </table>
+
+
+      </div>  
   </div>
 </template>
   
@@ -58,8 +79,9 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items:flex-start;
-  justify-content:space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-item {
@@ -104,15 +126,29 @@
   right: 0px;
   background-color: white;
   padding: 1px 1px;
-
   font-size: 0.8em; /* 调整字体大小 */
+}
+
+.process-layout {
+  background-color: white;
+  position: absolute;
+  bottom: 0px;
+  width: 80%; 
+}
+
+.toolitem {
+  margin: 0px;
+}
+
+.item-wrapper {
+  position: relative;
 }
   </style>
   
   
   
 
-    <script>
+<script>
     export default {
       data() {
         return {
@@ -140,7 +176,8 @@
                       damage: this.armour[index].damage,
                       maxDamage: this.armour[index].maxDamage,
                       count: this.armour[index].count,
-                      alt: this.armour[index].name
+                      alt: this.armour[index].name,
+                      durability: (this.armour[index].maxDamage-this.armour[index].damage)/this.armour[index].maxDamage*100
                       })
               }
               else{     
@@ -161,7 +198,8 @@
                       damage: this.offHand[index].damage,
                       maxDamage: this.offHand[index].maxDamage,
                       count: this.offHand[index].count,
-                      alt: this.offHand[index].name
+                      alt: this.offHand[index].name,
+                      durability: (this.offHand[index].maxDamage-this.offHand[index].damage)/this.offHand[index].maxDamage*100
                       })
               }
               else{
