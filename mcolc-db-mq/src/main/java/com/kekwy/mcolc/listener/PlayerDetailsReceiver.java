@@ -2,8 +2,8 @@ package com.kekwy.mcolc.listener;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kekwy.mcolc.mapper.PlayerDetailsMapper;
 import com.kekwy.mcolc.model.PlayerDetails;
+import com.kekwy.mcolc.service.PlayerDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +22,19 @@ import java.io.IOException;
 @Slf4j
 public class PlayerDetailsReceiver {
 
-    private PlayerDetailsMapper playerDetailsMapper;
+    private PlayerDetailsService playerDetailsService;
 
     @Autowired
-    public void setPlayerDetailsMapper(PlayerDetailsMapper playerDetailsMapper) {
-        this.playerDetailsMapper = playerDetailsMapper;
+    public void setPlayerDetailsService(PlayerDetailsService playerDetailsService) {
+        this.playerDetailsService = playerDetailsService;
     }
-
 
     @RabbitHandler
     public void receive(byte[] bytes) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             PlayerDetails playerDetails = objectMapper.readValue(bytes, PlayerDetails.class);
-            if (playerDetailsMapper.exists(playerDetails.getUuid())) {
-
-            }
-            playerDetailsMapper.insert(playerDetails);
+            playerDetailsService.saveOrUpdate(playerDetails);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
