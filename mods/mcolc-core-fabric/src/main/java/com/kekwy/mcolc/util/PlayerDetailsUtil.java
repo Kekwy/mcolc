@@ -35,6 +35,8 @@ public class PlayerDetailsUtil {
 
         JsonObject playerDetails = new JsonObject();
 
+        playerDetails.addProperty("uuid", player.getUuidAsString());
+
         playerDetails.addProperty("name", player.getName().getString());
 
         // 获取生命值
