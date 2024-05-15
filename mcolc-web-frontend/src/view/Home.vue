@@ -1,12 +1,13 @@
 <template>
-  <div class="common-layout">
+  <div v-if="completed" class="common-layout">
     <el-container style="height: 100vh; border: 1px solid #eee">
       <el-aside width="200px" style="flex: 0 0 200px;">
-        <LeftMenu />
+        <LeftMenu :userName="userName"/>
       </el-aside>
       <el-container style="flex: 1;">
         <el-header><Header/></el-header>
-        <el-main><MainFrame></MainFrame></el-main>
+        <el-main><MainFrame  :health="usrhealth" :hunger="hunger"   :level="level" :currentLevel="currentLevel" :goods="goods"
+                             :armor=" armor" :offHand="offHand" :hotBar="hotBar"></MainFrame></el-main>
         <el-footer><Footer/></el-footer>
       </el-container>
     </el-container>
@@ -21,15 +22,48 @@ export default {
       { LeftMenu,Header,MainFrame,Footer },
   data() {
     return {
+      completed:false,
       inventory: "nihao1",
+      userName: "...",
+      usrhealth : 1.2,
+      hunger : 10,
+      level : 12,
+      currentLevel : 37.23,
+      goods: [],
+      armor: [],
+      offHand : null,
+      hotBar : []
+
     }
   },
-  mounted() {
+  created() {
     if (!window.localStorage.getItem('access_token')) {
       this.$router.replace('/login');
     } else {
-      this.$getRequest('/item/inventory').then(response => {
-        this.inventory = response.payload;
+      this.$getRequest('/player/details').then(response => {
+        let data = response.payload;
+
+        this.userName=data.name;
+
+        this.usrhealth=data.health/2;
+
+        this.hunger=data.hunger/2;
+
+        this.level=data.experience.level;
+
+        this.currentLevel=data.experience.progress*100;
+
+        this.goods=data.inventory.main;
+
+        this.armor=data.inventory.armor;
+      
+        this.offHand=data.inventory.offHand;
+
+
+
+        this.hotBar=data.inventory.hotBar;
+        this.completed=true;
+
       });
     }
   }

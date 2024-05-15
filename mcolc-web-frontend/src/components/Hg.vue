@@ -51,7 +51,6 @@ export default {
   },
   mounted(){
     this.addHgPicture(this.HgBarList); // 添加血条对应的图片序列
-
   },
   props: {
     hg: {

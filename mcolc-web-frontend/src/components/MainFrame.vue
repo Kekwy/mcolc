@@ -4,20 +4,20 @@
       <!-- EXP -->
       <el-row >
             <el-col :span="6"><div class="grid-content bg-purple-dark">EXP:</div></el-col>
-            <el-col :span="10"><el-progress :percentage="ExpPercentage" :color="ExpCustomColor" :stroke-width="10"></el-progress></el-col>
-            <el-col :span="4"><span>37级</span></el-col>
+            <el-col :span="10"><el-progress :percentage="currentLevel" :color="ExpCustomColor" :stroke-width="10" :show-text="false"></el-progress></el-col>
+            <el-col :span="6"><span :span="4" style="text-align:right;">{{this.level}}级</span></el-col>
           
           </el-row>
 
       <!-- HP -->
       <el-row>
         <el-col :span="6">
-          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">血条:</div>
+          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">生命值:</div>
         </el-col>
 
-        <el-col :span="10">
+        <el-col :span="5">
               <div>
-                <HealthBar :hp="Hp" :maxHp="HpMax" />
+                <HealthBar :hp="health" :maxHp="HpMax" />
               </div>
         </el-col>
 
@@ -26,12 +26,12 @@
       <!-- Hg -->
       <el-row>
         <el-col :span="6">
-          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">保持度:</div>
+          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">饱食度:</div>
         </el-col>
 
         <el-col :span="10">
               <div>
-                <HgBar :hg="Hg" :maxHg="HgMax" />
+                <HgBar :hg="hunger" :maxHg="HgMax" />
               </div>
         </el-col>
 
@@ -49,7 +49,7 @@
 
         <el-col class="shortcut-row-item">
               <div>
-                <Shortcut />
+                <Shortcut :hotBar="hotBar"/>
               </div>
         </el-col>
       </el-row>
@@ -62,7 +62,7 @@
 
         <el-col class="arm-row-item">
               <div>
-                <Arm />
+                <Arm :armour="armor" :offHand="offHand"/>
               </div>
         </el-col>
       </el-row>
@@ -77,7 +77,7 @@
         </el-col>
 
         <el-col class="goods-row-item">
-          <Goods/>
+          <Goods :goods="goods"/>
         </el-col>
       </el-row>
   </el-col>
@@ -99,7 +99,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35vh; /* 可视区域的高度 */
+  height: 31vh; /* 可视区域的高度 */
 }
 
 
@@ -160,21 +160,42 @@ import Arm from '@/components/Arm'
       }
     },
     data() {
-    return {
-      ExpPercentage : 50, //经验值占比
-      ExpLevel : 37, //等级
-      ExpCustomColor: '#409eff', // 等级条的颜色
-  
-      Hp: 6.5, // 血条占比
-      HpMax:10, //总体血量
+        return {
+          ExpCustomColor: '#409eff', // 等级条的颜色
+      
+          HpMax:10, //总体血量
 
-      Hg: 4.5, // 保持度占比
-      HgMax:10 //总体保持度
+          HgMax:10, //总体保持度
 
-
-    };
-  },
+          };
+    },
     mounted() {
+    },
+    props: {
+      health: {
+        default: 0 // 默认
+      },
+      hunger:{
+        default: 0.5 // 默认
+      },
+      level:{
+        default:10
+      },
+      currentLevel:{
+        default:0.3
+      },
+      goods:{
+        default: []
+      },
+      armor:{
+        default: []
+      },
+      offHand:{
+        default:[]
+      },
+      hotBar:{
+        default: []
+      }
     }
   }
 </script>

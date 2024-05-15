@@ -19,7 +19,7 @@ proxyObj['/api'] = {
         '^/api': '/'
     },
     // 目标地址
-    target: 'http://localhost:8081'
+    target: 'http://172.27.156.143:8081'
 
 }
 

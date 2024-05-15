@@ -13,7 +13,7 @@
       <div style="margin-right: 15px;">
         <el-avatar :src="avatarUrl"></el-avatar>
       </div>
-      <div class="like" style="color: #880e4f;">可弟</div>
+      <div class="like" style="color: #880e4f;">{{this.userName}}</div>
     </div>
 
      <!-- 主体菜单 -->
@@ -80,8 +80,15 @@
     },
     computed: {
     },
-    components: 
-      { AppAvatar },
+    components: { 
+      AppAvatar },
+
+    props: {
+      userName: {
+        type: String,
+        default: "..." // 默认
+      }
+    },
   }
 
 

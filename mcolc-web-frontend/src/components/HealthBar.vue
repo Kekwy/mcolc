@@ -65,7 +65,7 @@ export default {
   },
   methods:{
     addHealthPicture(HealthBarList) {
-          const full = Math.floor(this.hp);
+          const full = Math.round(this.hp);
           const half = Math.round((this.hp - full) * 2);
           const empty = Math.max(0, this.maxHp - full - half);
             for (let i = 0; i < full; i++) {
