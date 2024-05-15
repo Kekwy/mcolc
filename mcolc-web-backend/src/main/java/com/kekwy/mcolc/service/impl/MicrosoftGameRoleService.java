@@ -2,6 +2,7 @@ package com.kekwy.mcolc.service.impl;
 
 import com.kekwy.mcolc.model.GameRoleDetails;
 import com.kekwy.mcolc.service.GameRoleService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ public class MicrosoftGameRoleService implements GameRoleService {
     }
 
     @Override
+    @Cacheable(value = "playerDetailsCache", key = "#accessToken")
     public GameRoleDetails getGameRoleDetails(String accessToken) {
         // 缓存 redis
         HttpHeaders headers = new HttpHeaders();
