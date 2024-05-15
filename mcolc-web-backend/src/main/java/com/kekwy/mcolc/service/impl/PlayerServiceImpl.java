@@ -40,24 +40,23 @@ public class PlayerServiceImpl implements PlayerService {
 
         ResponseEntity<PlayerDetails> response = HttpRequestUtil.get(url, HttpEntity.EMPTY, PlayerDetails.class);
 
+        PlayerDetails playerDetails = null;
+
         if (response.getStatusCode().is2xxSuccessful() && response.hasBody()) {
-            PlayerDetails playerDetails = response.getBody();
-            //noinspection DataFlowIssue
+            playerDetails = response.getBody();
+        } else {
+            Optional<PlayerDetails> playerDetailsOptional = playerDetailsRepository.findById(uuid);
+            if (playerDetailsOptional.isPresent() && playerDetailsOptional.get().getName().equals(name)) {
+                playerDetails = playerDetailsOptional.get();
+            }
+        }
+        if (playerDetails != null) {
             localizeItemName(playerDetails.getInventory().getArmor());
             localizeItemName(playerDetails.getInventory().getMain());
             localizeItemName(playerDetails.getInventory().getOffHand());
             localizeItemName(playerDetails.getInventory().getHotBar());
-            return playerDetails;
-        } else {
-            Optional<PlayerDetails> playerDetailsOptional = playerDetailsRepository.findById(uuid);
-            if (playerDetailsOptional.isPresent()) {
-                PlayerDetails playerDetails = playerDetailsOptional.get();
-                if (playerDetails.getName().equals(name)) {
-                    return playerDetails;
-                }
-            }
         }
-        return null;
+        return playerDetails;
     }
 
     private void localizeItemName(List<MCItem> items) {
