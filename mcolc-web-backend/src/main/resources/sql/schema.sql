@@ -29,13 +29,13 @@ CREATE TABLE IF NOT EXISTS t_item
 
 CREATE TABLE IF NOT EXISTS t_inventory
 (
-    uuid VARCHAR(64) NOT NULL,
-    slot INT         NOT NULL,
-    item VARCHAR(64) NOT NULL,
-    PRIMARY KEY (uuid, slot, item),
+    uuid VARCHAR(64)                                 NOT NULL,
+    slot ENUM ('main', 'armor', 'hotBar', 'offhand') NOT NULL,
+    i    INT                                         NOT NULL,
+    item VARCHAR(64)                                 NOT NULL,
+    PRIMARY KEY (uuid, slot, i),
     FOREIGN KEY (uuid) REFERENCES t_player_details (uuid),
-    FOREIGN KEY (item) REFERENCES t_item (uuid),
-    CHECK (slot BETWEEN 0 AND 3)
+    FOREIGN KEY (item) REFERENCES t_item (uuid)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 

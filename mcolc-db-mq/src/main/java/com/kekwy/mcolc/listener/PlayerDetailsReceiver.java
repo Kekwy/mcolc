@@ -35,6 +35,9 @@ public class PlayerDetailsReceiver {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             PlayerDetails playerDetails = objectMapper.readValue(bytes, PlayerDetails.class);
+            if (playerDetailsMapper.exists(playerDetails.getUuid())) {
+
+            }
             playerDetailsMapper.insert(playerDetails);
         } catch (IOException e) {
             throw new RuntimeException(e);

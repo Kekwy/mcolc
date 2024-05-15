@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/mcolc-db-mq/src/main/resources/mappers/InventoryMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/mcolc-db-mq/src/main/resources/mappers/PlayerDetailsMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/mcolc-web-backend/src/main/resources/sql/schema.sql" dialect="MySQL" />
   </component>
 </project>

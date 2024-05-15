@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kekwy.mcolc.mapper.InventoryMapper">
+  <insert id="insert">
+    INSERT INTO t_inventory
+    VALUES (#{uuid},
+            #{slot},
+            #{index},
+            #{itemUuid});
+  </insert>
+  <update id="update">
+    UPDATE t_inventory
+    SET item = #{itemUuid}
+    WHERE uuid = #{uuid}
+      AND slot = #{slot}
+      AND i = #{index}
+  </update>
+  <select id="exists" resultType="java.lang.Boolean">
+    SELECT count(*) > 0
+    FROM t_inventory
+    WHERE uuid = #{uuid}
+      AND slot = #{slot}
+      AND i = #{index}
+  </select>
+  <select id="selectItemUuid" resultType="java.lang.String">
+    SELECT item
+    FROM t_inventory
+    WHERE uuid = #{uuid}
+      AND slot = #{slot}
+      AND i = #{index}
+  </select>
+</mapper>

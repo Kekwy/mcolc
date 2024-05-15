@@ -1,4 +1,4 @@
-docker run -id \
+docker run -d \
   --name=rabbitmq \
   -p 5671:5671 \
   -p 5672:5672 \

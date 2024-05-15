@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface PlayerDetailsMapper {
+public interface ItemMapper {
 
     boolean exists(@Param("uuid") String uuid);
 
