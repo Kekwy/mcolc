@@ -6,7 +6,8 @@
       </el-aside>
       <el-container style="flex: 1;">
         <el-header><Header/></el-header>
-        <el-main><MainFrame  :health="usrhealth" :hunger="hunger"   :level="level" :currentLevel="currentLevel" :goods="goods"></MainFrame></el-main>
+        <el-main><MainFrame  :health="usrhealth" :hunger="hunger"   :level="level" :currentLevel="currentLevel" :goods="goods"
+                             :armor=" armor" :offHand="offHand" :hotBar="hotBar"></MainFrame></el-main>
         <el-footer><Footer/></el-footer>
       </el-container>
     </el-container>
@@ -30,8 +31,8 @@ export default {
       currentLevel : 37.23,
       goods: [],
       armor: [],
-      offhand : null,
-      hotbar : []
+      offHand : null,
+      hotBar : []
 
     }
   },
@@ -44,24 +45,23 @@ export default {
 
         this.userName=data.name;
 
-        this.usrhealth=data.health;
+        this.usrhealth=data.health/2;
 
-        this.hunger=data.hunger;
+        this.hunger=data.hunger/2;
 
         this.level=data.experience.level;
 
         this.currentLevel=data.experience.progress*100;
 
-
         this.goods=data.inventory.main;
 
         this.armor=data.inventory.armor;
-
-        this.offhand=data.inventory.offHand;
-
-        this.hotbar=data.inventory.hotBar;
+      
+        this.offHand=data.inventory.offHand;
 
 
+
+        this.hotBar=data.inventory.hotBar;
         this.completed=true;
 
       });

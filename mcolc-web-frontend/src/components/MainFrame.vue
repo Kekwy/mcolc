@@ -49,7 +49,7 @@
 
         <el-col class="shortcut-row-item">
               <div>
-                <Shortcut />
+                <Shortcut :hotBar="hotBar"/>
               </div>
         </el-col>
       </el-row>
@@ -62,7 +62,7 @@
 
         <el-col class="arm-row-item">
               <div>
-                <Arm />
+                <Arm :armour="armor" :offHand="offHand"/>
               </div>
         </el-col>
       </el-row>
@@ -99,7 +99,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35vh; /* 可视区域的高度 */
+  height: 31vh; /* 可视区域的高度 */
 }
 
 
@@ -160,17 +160,14 @@ import Arm from '@/components/Arm'
       }
     },
     data() {
-    return {
-      ExpCustomColor: '#409eff', // 等级条的颜色
-  
-      Hp: 6.5, // 血条占比
-      HpMax:10, //总体血量
+        return {
+          ExpCustomColor: '#409eff', // 等级条的颜色
+      
+          HpMax:10, //总体血量
 
-      Hg: 4.5, // 保持度占比
-      HgMax:10 //总体保持度
+          HgMax:10, //总体保持度
 
-
-      };
+          };
     },
     mounted() {
     },
@@ -189,8 +186,16 @@ import Arm from '@/components/Arm'
       },
       goods:{
         default: []
+      },
+      armor:{
+        default: []
+      },
+      offHand:{
+        default:[]
+      },
+      hotBar:{
+        default: []
       }
-
     }
   }
 </script>

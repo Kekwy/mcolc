@@ -50,7 +50,6 @@ export default {
       }
   },
   mounted(){
-    this.hp=this.hp/2;
     this.addHealthPicture(this.HealthBarList); // 添加血条对应的图片序列
 
   },
