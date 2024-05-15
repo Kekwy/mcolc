@@ -55,3 +55,7 @@ https://zhuanlan.zhihu.com/p/344830045
 https://www.bilibili.com/read/cv8722213/
 
 https://www.curseforge.com/minecraft/mc-mods/iconexporter 导出方块图标
+
+gradle 打包包含依赖时的冲突问题 https://blog.csdn.net/jiaohuizhuang6019/article/details/129420560
+
+duplicatesStrategy = DuplicatesStrategy.EXCLUDE

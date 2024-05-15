@@ -1,33 +1,19 @@
 package com.kekwy.mcolc;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.sun.net.httpserver.HttpServer;
+import com.kekwy.mcolc.util.PlayerDetailsUtil;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeoutException;
 
 
 public class ExampleMod implements ModInitializer {
@@ -35,10 +21,15 @@ public class ExampleMod implements ModInitializer {
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("Mcolc Core");
+    public static final String QUEUE_NAME = "mcolc.db.queue";
+    public static final String EXCHANGE_NAME = "mcolc.db.direct";
+    public static final String ROUTING_KEY = "mcolc.db.key";
 
     // 自定义物品
 //	public static final Item CUSTOM_ITEM = new Item(new FabricItemSettings());
 
+    private Connection connection;
+    private Channel channel;
     private HttpListener httpListener;
 
     @Override
@@ -55,6 +46,39 @@ public class ExampleMod implements ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             httpListener.stop();
         });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            try {
+                channel.close();
+                connection.close();
+            } catch (IOException | TimeoutException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+            ServerPlayerEntity player = handler.getPlayer();
+            JsonObject playerDetails = PlayerDetailsUtil.getPlayerDetails(player);
+            try {
+                channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, null, playerDetails.toString().getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // 创建连接工厂
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        factory.setPort(5672);
+        factory.setUsername("mcolc");
+        factory.setPassword("mcolc");
+
+        // 建立连接
+        try {
+            connection = factory.newConnection();
+            channel = connection.createChannel();
+            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+        } catch (IOException | TimeoutException e) {
+            throw new RuntimeException(e);
+        }
 
         // 注册用于接收 Web 请求的自定义网络插件
         // 创建并启动一个简单的 HTTP 服务器，监听指定端口
