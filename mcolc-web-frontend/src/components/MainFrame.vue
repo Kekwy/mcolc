@@ -3,7 +3,7 @@
     <el-col>
       <!-- EXP -->
       <el-row >
-            <el-col :span="6"><div class="grid-content bg-purple-dark">EXP:</div></el-col>
+            <el-col :span="8"><div class="grid-content bg-purple-dark">EXP:</div></el-col>
             <el-col :span="10"><el-progress :percentage="currentLevel" :color="ExpCustomColor" :stroke-width="10" :show-text="false"></el-progress></el-col>
             <el-col :span="6"><span :span="4" style="text-align:right;">{{this.level}}级</span></el-col>
           
@@ -11,7 +11,7 @@
 
       <!-- HP -->
       <el-row>
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="grid-content bg-purple-dark" style="margin-top: 5px;">生命值:</div>
         </el-col>
 
@@ -25,7 +25,7 @@
 
       <!-- Hg -->
       <el-row>
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="grid-content bg-purple-dark" style="margin-top: 5px;">饱食度:</div>
         </el-col>
 
