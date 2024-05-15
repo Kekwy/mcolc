@@ -3,6 +3,7 @@ package com.kekwy.mcolc.service.impl;
 import com.kekwy.mcolc.config.McolcConfig;
 import com.kekwy.mcolc.model.MCItem;
 import com.kekwy.mcolc.model.PlayerDetails;
+import com.kekwy.mcolc.repo.PlayerDetailsRepository;
 import com.kekwy.mcolc.service.PlayerService;
 import com.kekwy.mcolc.util.HttpRequestUtil;
 import com.kekwy.mcolc.util.UuidUtil;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -21,6 +23,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     public void setMcolcConfig(McolcConfig mcolcConfig) {
         this.mcolcConfig = mcolcConfig;
+    }
+
+    private PlayerDetailsRepository playerDetailsRepository;
+
+    @Autowired
+    public void setPlayerDetailsRepository(PlayerDetailsRepository playerDetailsRepository) {
+        this.playerDetailsRepository = playerDetailsRepository;
     }
 
     @Override
@@ -39,6 +48,14 @@ public class PlayerServiceImpl implements PlayerService {
             localizeItemName(playerDetails.getInventory().getOffHand());
             localizeItemName(playerDetails.getInventory().getHotBar());
             return playerDetails;
+        } else {
+            Optional<PlayerDetails> playerDetailsOptional = playerDetailsRepository.findById(uuid);
+            if (playerDetailsOptional.isPresent()) {
+                PlayerDetails playerDetails = playerDetailsOptional.get();
+                if (playerDetails.getName().equals(name)) {
+                    return playerDetails;
+                }
+            }
         }
         return null;
     }

@@ -34,20 +34,10 @@ spring:
           microsoft:
             authorization-uri: https://login.live.com/oauth20_authorize.srf
             token-uri: https://login.live.com/oauth20_token.srf
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mcolc
 
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/mcolc?serverTimezone=GMT%2B8&characterEncoding=utf-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: demo
-    password:
-  sql:
-    init:
-      schema-locations:
-        - classpath:sql/schema.sql
-      mode: always
-
-  web:
-    resources:
-      static-locations:
 
