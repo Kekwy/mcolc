@@ -3,7 +3,6 @@ package com.kekwy.mcolc;
 import com.kekwy.mcolc.util.ChestUtil;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 
-public class ChestEventHandler implements UseBlockCallback {
+public class UseChestCallBack implements UseBlockCallback {
 
     public static final String QUEUE_NAME = "mcolc.db.chest.queue";
     public static final String EXCHANGE_NAME = "mcolc.db.chest.direct";

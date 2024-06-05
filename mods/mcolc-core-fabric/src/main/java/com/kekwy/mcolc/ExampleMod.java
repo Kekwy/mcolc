@@ -66,7 +66,7 @@ public class ExampleMod implements ModInitializer {
             }
         });
         // 监听玩家开箱子事件
-        UseBlockCallback.EVENT.register(new ChestEventHandler());
+        UseBlockCallback.EVENT.register(new UseChestCallBack());
 
         // 创建连接工厂
         ConnectionFactory factory = new ConnectionFactory();
