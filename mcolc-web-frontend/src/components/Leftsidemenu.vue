@@ -1,6 +1,6 @@
 <template>
-  <div style="height: 100%; background-color: #fce4ec;">
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 200px; background-color: #f3e5f5;">
+  <div style="height: 100%; background-color: #ffffff;">
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 200px; background-color: #ffffff;">
       <div style="width: 100px; height: 100px; background-color: #fff; padding: 10px; border-radius: 50%; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: center; align-items: center;">
         <AppAvatar/>
       </div>
@@ -11,49 +11,33 @@
     <!-- 用户头像和用户名 -->
     <div style="display: flex; align-items: center; padding: 20px;">
       <div style="margin-right: 15px;">
-        <el-avatar :src="avatarUrl"></el-avatar>
+        <AuthImg  :authSrc="avatarUrl" style="width: 40px; height: 40px;"/>
+        <!-- <el-avatar :src="avatarUrl"></el-avatar> -->
       </div>
-      <div class="like" style="color: #880e4f;">{{this.userName}}</div>
+      <div class="like" style="color: #000000;">{{this.userName}}</div>
     </div>
 
-     <!-- 主体菜单 -->
-     <el-menu
-     default-active="2"
-     class="el-menu-vertical-demo"
-     @open="handleOpen"
-     @close="handleClose"
-     background-color="#ad1457"
-     text-color="#fff"
-     active-text-color="#ff5252"
-     style="flex: 1;"
-   >
-     <el-menu-item index="1">
-       <i class="el-icon-menu"></i>
-       <span slot="title">角色</span>
-     </el-menu-item>
+    <el-menu
+    default-active="2"
+    class="el-menu-vertical-demo"
+    @open="handleOpen"
+    @close="handleClose"
+    background-color="#ffffff"
+    text-color="#000000"
+    style="flex: 1;"
+  >
+    <el-menu-item index="1" @click="activateMenuItem(1)" :class="{ 'active-menu-item': activeIndex == 1 }">
+      <i class="el-icon-menu"></i>
+      <span slot="title">角色</span>
+    </el-menu-item>
 
-     <el-menu-item index="2">
-       <i class="el-icon-document"></i>
-       <span slot="title">库存</span>
-     </el-menu-item>
+    <el-menu-item index="2" @click="activateMenuItem(2)" :class="{ 'active-menu-item': activeIndex == 2 }">
+      <i class="el-icon-document"></i>
+      <span slot="title">库存</span>
+    </el-menu-item>
+  </el-menu>
 
-     <el-submenu index="3">
-      <template slot="title"><i class="el-icon-message"></i>导航一</template>
-      <el-menu-item-group>
-        <template slot="title">分组一</template>
-        <el-menu-item index="1-1">选项1</el-menu-item>
-        <el-menu-item index="1-2">选项2</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组2">
-        <el-menu-item index="1-3">选项3</el-menu-item>
-      </el-menu-item-group>
-      <el-submenu index="1-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-      </el-submenu>
-    </el-submenu>
 
-   </el-menu>
   </div>
 </template>
 
@@ -70,18 +54,31 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      activateMenuItem(index) {
+
+        this.activeIndex = index.toString(); // 更新激活的菜单项
+      },
+      handleOpen() {
+        // 处理菜单展开事件
+      },
+      handleClose() {
+        // 处理菜单关闭事件
       }
     },
     data() {
-      const avatarUrl='/images/avatar.png';
+      const avatarUrl='/api/player/avatar';
       return {
-        avatarUrl: avatarUrl
+        avatarUrl: avatarUrl,
+        activeIndex: '2'
       }
     },
     computed: {
     },
     components: { 
-      AppAvatar },
+      AppAvatar,
+      AuthImg   
+    },
 
     props: {
       userName: {
@@ -93,14 +90,18 @@
 
 
 import AppAvatar from "@/components/AppAvatar"
+import AuthImg  from "@/components/AuthImg.vue"
 </script>
 
 
 
 <style scoped>
 .like {
-  font-size: 18px;
+  font-size: 16px;
 }
 
-
+.active-menu-item {
+  background-color: #007bff !important;
+  color: #ffffff !important; /* 悬停状态下文字颜色为白色 */
+}
 </style>

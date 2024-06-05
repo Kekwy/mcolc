@@ -21,77 +21,134 @@
 
 <template>
   <div class="container">
-  <div class="table">
-    <table>
-      <tr>
-        <td v-for="(item, colIndex) in images" :key="colIndex" :class="{ 'cell': item }">
-          <div class="cell-content">
-                  <img v-if="item" :src="item.src" alt="Item Image" class="item-img" />
-                  <img v-else class="empty-item">
-                  <div  v-if="item && item.count > 1" class="item-number">{{ item.count }}</div>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <div class="table">
+
+      <table>
+        <tr >
+          <td v-for="(item, colIndex) in images" :key="colIndex" :class="{ 'cell': item }">
+            <div class="cell-content">
+                <div class="item-wrapper">
+                    <el-tooltip class="toolitem" effect="dark" content="item.name" placement="top-start">
+                        <div slot="content">{{item.name}}</div>
+                        <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
+                        </el-tooltip>
+                    <img v-if="item.name=='tempEmpty'" class="empty-item" :src="item.src">
+                    <div v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
+                </div>
+                <div v-if="item.name!='tempEmpty' && item.count==1 && item.maxDamage!=0 " class="process-layout"> 
+                  <el-progress :define-back-color="black" :stroke-width="3" :show-text='false' :percentage="item.durability" status="success"></el-progress>
+                </div>
+              </div>
+          </td>
+        </tr>
+      </table>
+
+      </div>
+  
+      <div>
+
+
+        <table>
+          <tr >
+            <td v-for="(item, colIndex) in offHandimage" :key="colIndex" :class="{ 'cell': item }">
+              <div class="cell-content">
+                  <div class="item-wrapper">
+                      <el-tooltip class="toolitem" effect="dark" content="item.name" placement="top-start">
+                          <div slot="content">{{item.name}}</div>
+                          <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
+                          </el-tooltip>
+                      <img v-if="item.name=='tempEmpty'" class="empty-item" :src="item.src">
+                      <div v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
+                  </div>
+                  <div v-if="item.name!='tempEmpty' && item.count==1 && item.maxDamage!=0 " class="process-layout"> 
+                    <el-progress :define-back-color="black" :stroke-width="3" :show-text='false' :percentage="item.durability" status="success"></el-progress>
+                  </div>
+                </div>
+            </td>
+          </tr>
+        </table>
+
+
+      </div>  
   </div>
-</div>
 </template>
   
 <style scoped>
-  .container {
-    width: 700px; /* 指定容器的宽度 */
-    height: 100px; /* 指定容器的高度 */
-    display: flex;
-    justify-content: space-between; /*向左顶格 */
-    align-items: center; /* 垂直居中 */
-  }
-  
-  .image-grid {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .image-container {
-    position: relative; /* 使内部元素相对于此容器定位 */
-    width: 69px; /* 每个图片容器的宽度，减去间距 */
-    margin: 0.3px; /* 图片容器之间的间距 */
-    box-sizing: border-box; /* 边框大小计算包括在元素的宽度和高度之内 */
-    border: 1px solid #1d1d1c; /* 图片容器的边框样式 */
-    padding: 10px; /* 图片容器内的填充 */
-    background-color: rgba(75, 72, 72, 0.8); /* 标签背景色 */
-  }
-  
-  .image {
-    width: 95%; /* 图片宽度占满容器 */
-  }
-  
-  .label {
-    position: absolute; /* 相对于父容器绝对定位 */
-    bottom: 1px; /* 距离容器底部的距离 */
-    right: 1px; /* 距离容器右侧的距离 */
-    background-color: rgba(255, 255, 255, 0.8); /* 标签背景色 */
-    padding: 3px 5px; /* 标签内填充 */
-    border-radius: 3px; /* 圆角 */
-    font-size: 10px;
-  }
-  
-  .arm-image-container {
-    position: relative; /* 使内部元素相对于此容器定位 */
-    width: 69px; /* 每个图片容器的宽度，减去间距 */
-    margin: 0.3px; /* 图片容器之间的间距 */
-    box-sizing: border-box; /* 边框大小计算包括在元素的宽度和高度之内 */
-    border: 1px solid #1d1d1c; /* 更改为绿色边框 */
-    padding: 10px; /* 图片容器内的填充 */
-    background-color: rgba(75, 72, 72, 0.8); /* 标签背景色 */
+.cell-content {
+  position: relative; /* 为了定位内部的数字 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  }
+.empty-item {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(75, 72, 72, 0.8);;
+  border-color:rgba(75, 72, 72, 0.8);;
+}
+.table {
+  width: 600px;
+  
+}
+.container {
+  width: 577px; /* 指定容器的宽度 */
+  height: 65px; /* 指定容器的高度 */
+  display: flex;
+  justify-content: space-between; /*向左顶格 */
+  align-items: center; /* 垂直居中 */
+}
+.table table {
+  width: 257px; /* 指定容器的宽度 */
+  height: 65px; /* 指定容器的高度 */
+  border-collapse: collapse;
+  background-color: rgba(75, 72, 72, 0.8);;
+}
 
+.table td {
+  border: 0.1px solid white;
+}
+
+.item-img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+  background-color: rgba(75, 72, 72, 0.8);
+}
+
+.item-number {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background-color: white;
+  padding: 1px 1px;
+  font-size: 0.8em; /* 调整字体大小 */
+}
+
+.process-layout {
+  background-color: white;
+  position: absolute;
+  bottom: 0px;
+  width: 80%; 
+}
+
+.toolitem {
+  margin: 0px;
+}
+
+.item-wrapper {
+  position: relative;
+}
   </style>
   
   
   
 
-    <script>
+<script>
     export default {
       data() {
         return {
@@ -119,11 +176,16 @@
                       damage: this.armour[index].damage,
                       maxDamage: this.armour[index].maxDamage,
                       count: this.armour[index].count,
-                      alt: this.armour[index].name
+                      alt: this.armour[index].name,
+                      durability: (this.armour[index].maxDamage-this.armour[index].damage)/this.armour[index].maxDamage*100
                       })
               }
-              else{
-                this.images.push(null);
+              else{     
+                this.image.push({
+                  src: "/images/minecraft_empty.png",
+                  name: "tempEmpty",
+                });
+
               }
         }
 
@@ -136,11 +198,16 @@
                       damage: this.offHand[index].damage,
                       maxDamage: this.offHand[index].maxDamage,
                       count: this.offHand[index].count,
-                      alt: this.offHand[index].name
+                      alt: this.offHand[index].name,
+                      durability: (this.offHand[index].maxDamage-this.offHand[index].damage)/this.offHand[index].maxDamage*100
                       })
               }
               else{
-                this.offHandimage.push(null);
+                this.offHandimage.push({
+                  src: "/images/minecraft_empty.png",
+                  name: "tempEmpty",
+                });
+
               }
         }
 

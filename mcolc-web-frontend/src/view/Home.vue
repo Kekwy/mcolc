@@ -5,10 +5,10 @@
         <LeftMenu :userName="userName"/>
       </el-aside>
       <el-container style="flex: 1;">
-        <el-header><Header/></el-header>
+        <el-header style="background-color: #ffffff;"><Header/></el-header>
         <el-main><MainFrame  :health="usrhealth" :hunger="hunger"   :level="level" :currentLevel="currentLevel" :goods="goods"
                              :armor=" armor" :offHand="offHand" :hotBar="hotBar"></MainFrame></el-main>
-        <el-footer><Footer/></el-footer>
+        <el-footer style="background-color: #ffffff; height: 50px"><Footer/></el-footer>
       </el-container>
     </el-container>
   </div>
@@ -32,7 +32,7 @@ export default {
       goods: [],
       armor: [],
       offHand : null,
-      hotBar : []
+      hotBar : [],
 
     }
   },
@@ -40,6 +40,7 @@ export default {
     if (!window.localStorage.getItem('access_token')) {
       this.$router.replace('/login');
     } else {
+
       this.$getRequest('/player/details').then(response => {
         let data = response.payload;
 

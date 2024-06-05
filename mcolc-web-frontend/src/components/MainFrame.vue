@@ -3,7 +3,9 @@
     <el-col>
       <!-- EXP -->
       <el-row >
-            <el-col :span="6"><div class="grid-content bg-purple-dark">EXP:</div></el-col>
+            <el-col :span="8"><div class="grid-content bg-purple-dark" style="display: flex; justify-content: center; align-items: center; padding-left: 160px;">
+              <img  src="https://img.shields.io/badge/%E7%BB%8F%E9%AA%8C%E5%80%BC-EXP-green"/>
+            </div></el-col>
             <el-col :span="10"><el-progress :percentage="currentLevel" :color="ExpCustomColor" :stroke-width="10" :show-text="false"></el-progress></el-col>
             <el-col :span="6"><span :span="4" style="text-align:right;">{{this.level}}级</span></el-col>
           
@@ -11,8 +13,10 @@
 
       <!-- HP -->
       <el-row>
-        <el-col :span="6">
-          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">生命值:</div>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-dark" style="margin-top: 0px; display: flex; justify-content: center; align-items: center; padding-left: 160px;">
+            <img  src="https://img.shields.io/badge/%E7%94%9F%E5%91%BD%E5%80%BC-HP-red"/>
+          </div>
         </el-col>
 
         <el-col :span="5">
@@ -25,8 +29,10 @@
 
       <!-- Hg -->
       <el-row>
-        <el-col :span="6">
-          <div class="grid-content bg-purple-dark" style="margin-top: 5px;">饱食度:</div>
+        <el-col :span="8">
+          <div class="grid-content bg-purple-dark" style="display: flex; justify-content: center; align-items: center; padding-left: 160px;">
+            <img  src="https://img.shields.io/badge/%E9%A5%B1%E9%A3%9F%E5%BA%A6-HG-b5651d"/>
+          </div>
         </el-col>
 
         <el-col :span="10">
@@ -44,7 +50,9 @@
       <!-- 快捷键 -->
       <el-row class="shortcut-row">
         <el-col :span="2">
-          <div class="grid-content bg-purple-dark" >快捷:</div>
+          <div class="grid-content bg-purple-dark" style=" display: flex; padding-left: 250px;">
+            <img  src="https://img.shields.io/badge/%E5%BF%AB%E6%8D%B7%E6%A0%8F-HotBar-8A2BE2"/>
+          </div>
         </el-col>
 
         <el-col class="shortcut-row-item">
@@ -57,7 +65,9 @@
       <!-- 武器 -->
       <el-row class="arm-row">
         <el-col :span="2">
-          <div class="grid-content bg-purple-dark">装备:</div>
+          <div class="grid-content bg-purple-dark" style=" display: flex; padding-left: 250px;">
+            <img src="https://img.shields.io/badge/%E8%A3%85%E5%A4%87%E6%A0%8F-Armors-c0c0c0"/>
+          </div>
         </el-col>
 
         <el-col class="arm-row-item">
@@ -73,7 +83,9 @@
       <!-- 物品栏 -->
       <el-row class="goods-row">
         <el-col :span="2">
-          <div class="grid-content bg-purple-dark">物品栏:</div>
+          <div class="grid-content bg-purple-dark" style=" display: flex; padding-left: 250px;">
+            <img src="https://img.shields.io/badge/%E7%89%A9%E5%93%81%E6%A0%8F-Inventory-blue"/>
+          </div>
         </el-col>
 
         <el-col class="goods-row-item">

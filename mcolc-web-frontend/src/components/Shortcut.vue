@@ -2,13 +2,21 @@
   <div class="container">
   <div class="table">
     <table>
-      <tr>
+      <tr >
         <td v-for="(item, colIndex) in images" :key="colIndex" :class="{ 'cell': item }">
           <div class="cell-content">
-                  <img v-if="item" :src="item.src" alt="Item Image" class="item-img" />
-                  <img v-else class="empty-item">
-                  <div  v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
-          </div>
+              <div class="item-wrapper">
+                  <el-tooltip class="toolitem" effect="dark" content="item.name" placement="top-start">
+                      <div slot="content">{{item.name}}</div>
+                      <img v-if="item.name!='tempEmpty'" :src="item.src" alt="Item Image" class="item-img" />
+                      </el-tooltip>
+                  <img v-if="item.name=='tempEmpty'" class="empty-item" :src="item.src">
+                  <div v-if="item.name!='tempEmpty' && item.count > 1" class="item-number">{{ item.count }}</div>
+              </div>
+              <div v-if="item.name!='tempEmpty' && item.count==1 && item.maxDamage!=0 " class="process-layout"> 
+                <el-progress :define-back-color="black" :stroke-width="3" :show-text='false' :percentage="item.durability" status="success"></el-progress>
+              </div>
+            </div>
         </td>
       </tr>
     </table>
@@ -22,6 +30,7 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -70,6 +79,17 @@
 
   font-size: 0.8em; /* 调整字体大小 */
 }
+
+.process-layout {
+  background-color: white;
+  position: absolute;
+  bottom: 0px;
+  width: 80%; 
+}
+
+.toolitem {
+  margin: 0px;
+}
 </style>
 
 
@@ -99,7 +119,8 @@
                       damage: this.hotBar[index].damage,
                       maxDamage: this.hotBar[index].maxDamage,
                       count: this.hotBar[index].count,
-                      alt: this.hotBar[index].name
+                      alt: this.hotBar[index].name,
+                      durability: (this.hotBar[index].maxDamage-this.hotBar[index].damage)/this.hotBar[index].maxDamage*100
                       })
               }
               else{
