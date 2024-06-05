@@ -36,13 +36,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: rgba(75, 72, 72, 0.8);;
+  border-color:rgba(75, 72, 72, 0.8);;
 }
 
 .empty-item {
   width: 64px;
   height: 64px;
-  background-color: rgba(75, 72, 72, 0.8);;
-  border-color:rgba(75, 72, 72, 0.8);;
 }
 .table {
   width: 540px;
@@ -66,11 +66,10 @@
 }
 
 .item-img {
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   display: block;
   margin: 0 auto;
-  background-color: rgba(75, 72, 72, 0.8);
 }
 
 .item-wrapper {
