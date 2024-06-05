@@ -7,6 +7,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.slf4j.Logger;
@@ -54,6 +55,7 @@ public class ExampleMod implements ModInitializer {
                 throw new RuntimeException(e);
             }
         });
+        // 监听玩家下线事件
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
             JsonObject playerDetails = PlayerDetailsUtil.getPlayerDetails(player);
@@ -63,6 +65,8 @@ public class ExampleMod implements ModInitializer {
                 throw new RuntimeException(e);
             }
         });
+        // 监听玩家开箱子事件
+        UseBlockCallback.EVENT.register(new ChestEventHandler());
 
         // 创建连接工厂
         ConnectionFactory factory = new ConnectionFactory();

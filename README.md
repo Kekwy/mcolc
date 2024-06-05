@@ -59,3 +59,18 @@ https://www.curseforge.com/minecraft/mc-mods/iconexporter 导出方块图标
 gradle 打包包含依赖时的冲突问题 https://blog.csdn.net/jiaohuizhuang6019/article/details/129420560
 
 duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+
+
+
+
+
+
+第三章更名：多方言动态SQL代码生成器
+
+
+
+
+
+
+

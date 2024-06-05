@@ -8,6 +8,8 @@ import com.kekwy.mcolc.service.PlayerService;
 import com.kekwy.mcolc.util.HttpRequestUtil;
 import com.kekwy.mcolc.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,7 @@ public class PlayerServiceImpl implements PlayerService {
                 playerDetails = playerDetailsOptional.get();
             }
         }
+
         if (playerDetails != null) {
             localizeItemName(playerDetails.getInventory().getArmor());
             localizeItemName(playerDetails.getInventory().getMain());
@@ -67,6 +70,19 @@ public class PlayerServiceImpl implements PlayerService {
                 item.setName(localizedName);
             }
         }
+    }
+
+    public static final String PLAYER_AVATAR_API =
+            "https://crafatar.com/avatars/%s?size=100&overlay";
+
+    @Override
+    @Cacheable(value = "playerAvatarCache", key = "#uuid", unless = "#result == null")
+    public Resource getPlayerAvatar(String uuid) {
+        ResponseEntity<Resource> response = HttpRequestUtil.get(PLAYER_AVATAR_API.formatted(uuid), HttpEntity.EMPTY, Resource.class);
+        if (response.getStatusCode().is2xxSuccessful() && response.hasBody()) {
+            return response.getBody();
+        }
+        return null;
     }
 
 }

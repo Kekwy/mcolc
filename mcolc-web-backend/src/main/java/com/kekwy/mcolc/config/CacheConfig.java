@@ -15,7 +15,7 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("playerDetailsCache");
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("playerDetailsCache", "playerAvatarCache");
         cacheManager.setCaffeine(Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES));
         return cacheManager;
     }
