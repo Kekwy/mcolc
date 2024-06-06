@@ -11,6 +11,8 @@
 
 ## 问题记录
 
+重要！前端的缓存机制
+
 gradle
 
 需要留意 resources/fabric.mod.json 中的配置信息。

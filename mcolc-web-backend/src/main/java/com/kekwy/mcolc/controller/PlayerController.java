@@ -54,7 +54,7 @@ public class PlayerController implements PlayerAPI {
         Resource avatar = playerService.getPlayerAvatar(id);
         if (avatar != null) {
             return ResponseEntity.ok()
-                    .cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES))
+//                    .cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES))
                     .contentType(MediaType.IMAGE_PNG).body(avatar);
         } else {
             return ResponseEntity.notFound().build();

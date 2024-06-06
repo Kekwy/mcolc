@@ -1,7 +1,7 @@
 <template>
-  <div style="height: 100%; background-color: #ffffff;">
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 200px; background-color: #ffffff;">
-      <div style="width: 100px; height: 100px; background-color: #fff; padding: 10px; border-radius: 50%; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: center; align-items: center;">
+  <div style="height: 100%; background-color: #F9FBFA;">
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 200px; background-color: #F9FBFA;">
+      <div style="width: 100px; height: 100px; background-color: #F9FBFA; padding: 10px; border-radius: 50%; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: center; align-items: center;">
         <AppAvatar/>
       </div>
     </div>
@@ -18,11 +18,11 @@
     </div>
 
     <el-menu
-    default-active="2"
+    default-active="1"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
-    background-color="#ffffff"
+    background-color="#F9FBFA"
     text-color="#000000"
     style="flex: 1;"
   >
@@ -70,7 +70,7 @@
       const avatarUrl='/api/player/avatar';
       return {
         avatarUrl: avatarUrl,
-        activeIndex: '2'
+        activeIndex: '1'
       }
     },
     computed: {

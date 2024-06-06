@@ -1,5 +1,5 @@
 <template>
-  <div>Login Success!</div>
+  <div>登录成功，正在跳转...</div>
 </template>
 
 <script>
